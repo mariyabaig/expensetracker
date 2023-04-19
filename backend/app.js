@@ -25,6 +25,9 @@ var cors = require("cors");
 // Load the income routes
 const Income = require("./routes/income");
 
+// Load the expense routes
+const Expense = require("./routes/expense");
+
 // Define the port to listen on, using the environment variable or defaulting to 8000
 const port = process.env.PORT || 8000;
 
@@ -33,6 +36,9 @@ app.use(cors())
 
 // Use the income routes middleware
 app.use(Income);
+
+// Use the expense routes middleware
+app.use(Expense);
 
 // Define a route to handle requests to the root URL
 app.get("/",(req,res)=>{
