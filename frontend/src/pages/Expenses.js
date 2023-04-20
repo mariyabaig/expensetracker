@@ -46,6 +46,11 @@ const Expenses = () => {
     newData.splice(index, 1);
     setSubmittedData(newData);
   };
+  //sum of all the submitted expenses using reduce
+  const totalExpenses = submittedData.reduce((total, data) => {
+    return total + parseInt(data.amount)
+  }, 0)
+
   // This state variable is used to store the submitted data from the form
   //  It is initialized to null because no data has been submitted yet
   // const [submittedData, setSubmittedData] = useState(null);
@@ -56,6 +61,8 @@ const Expenses = () => {
         <div className="card">
           <div className="card-overlay"></div>
           <form onSubmit={handleSubmit}>
+            {/* render sum of all the submitted expenses */}
+            <h3 className="font-bold">Total Expenses : {totalExpenses}</h3>
             <label>
               Expense Amount
               <input
