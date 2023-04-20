@@ -6,10 +6,17 @@ const Expenses = () => {
     date: "",
     category: "",
   });
+  const [submittedData, setSubmittedData] = useState(null)
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(setExpense);
+    const data={
+      amount:expense.amount,
+      date:expense.date,
+      category:expense.category
+    }
+    setSubmittedData(data)
   };
 
   return (
@@ -66,6 +73,14 @@ const Expenses = () => {
             </button>
           </form>
           </div>
+          {submittedData && (
+              <div>
+                <h2>Submitted Data</h2>
+                <p>Amount: {submittedData.amount}</p>
+                <p>Date: {submittedData.date}</p>
+                <p>Category: {submittedData.category}</p>
+              </div>
+            )}
           </div>
     </>
   );
