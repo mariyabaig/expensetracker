@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Income from './pages/Income';
 import Expenses from './pages/Expenses';
 import Navbar from './components/Navbar';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -11,8 +12,8 @@ function App() {
    <BrowserRouter>
   <Navbar/>
    <Routes>
-    
-    <Route exact path = "/" element={<Dashboard/>}/>
+   <Route exact path = "/" element={<Login/>}/>
+    <Route exact path = "/dashboard" element={<Dashboard/>}/>
     <Route exact path = "/income" element={<Income/>}/>
     <Route exact path = "/expenses" element={<Expenses/>}/>
    </Routes>
