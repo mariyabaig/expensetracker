@@ -88,3 +88,38 @@ input {
   border-radius: 20px;
   box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
 }
+.table {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+/* .table p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.table p:first-child {
+  font-weight: bold;
+} */
+
+.table button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.table button + button {
+  margin-left: 5px;
+}
+
+.table button:hover {
+  background-color: #0062cc;
+}
