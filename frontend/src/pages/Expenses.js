@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { DateTime } from "luxon";
 const Expenses = () => {
   // Set up state for the form inputs and submitted data
   const [expense, setExpense] = useState({
@@ -130,23 +130,26 @@ const Expenses = () => {
             {/* Map over the submittedData array and display each object */}
             <table>
           
-              <tbody>
+             
                 {submittedData.map((data, index) => (
                   <tr key={index}>
                     <td>{data.amount}</td>
-                    <td>{data.date}</td>
                     <td>{data.category}</td>
-                    <td>
-                      <button onClick={() => handleEdit(index)}>Edit</button>
-                    </td>
-                    <td>
-                      <button onClick={() => handleDelete(index)}>
-                        Delete
-                      </button>
-                    </td>
+                    <td>{DateTime.fromISO(data.date).toFormat(
+                                  "dd LLL yy"
+                                )}</td>
+                  <span>
+                  <button onClick={() => handleEdit(index)}>Edit</button>
+                   
+                   <button onClick={() => handleDelete(index)}>
+                     Delete
+                   </button>
+                  </span>
+                  
+                   
                   </tr>
                 ))}
-              </tbody>
+            
             </table>
           </div>
         )}
