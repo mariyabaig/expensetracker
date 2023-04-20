@@ -9,20 +9,43 @@ const Expenses = () => {
   });
   // Set up an array to store submitted data
   const [submittedData, setSubmittedData] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
 
   // Handle form submission
   const handleSubmit = (event) => {
-    event.preventDefault();
-    // Create an object with the form data
+    event.preventDefault()
     const data = {
       amount: expense.amount,
       date: expense.date,
       category: expense.category,
-    };
-    // Add the object to the submittedData array
-    setSubmittedData([...submittedData, data]);
+    }
+    if (editIndex !== null) {
+      // Edit existing data object
+      const newData = [...submittedData]
+      newData[editIndex] = data
+      setSubmittedData(newData)
+      setEditIndex(null)
+    } else {
+      // Add new data object
+      setSubmittedData([...submittedData, data])
+    }
+    setExpense({
+      amount: "",
+      date: "",
+      category: "",
+    })
+  }
+
+  const handleEdit = (index) => {
+    setEditIndex(index);
+    setExpense(submittedData[index]);
   };
 
+  const handleDelete = (index) => {
+    const newData = [...submittedData];
+    newData.splice(index, 1);
+    setSubmittedData(newData);
+  };
   // This state variable is used to store the submitted data from the form
   //  It is initialized to null because no data has been submitted yet
   // const [submittedData, setSubmittedData] = useState(null);
@@ -79,7 +102,8 @@ const Expenses = () => {
         </div>
         {/* Display submitted data if there is any */}
         {submittedData.length > 0 && (
-          <div>
+          <div className="card">
+            <div className="card-overaly"></div>
             {/* This block of code is conditional rendering
  It only renders if submittedData is not null (meaning data has been submitted)
  It displays the submitted data in a card format
@@ -94,15 +118,36 @@ const Expenses = () => {
             <p>Category: {submittedData.category}</p>
           </div>
         )} */}
-            <h2>Submitted Data</h2>
+            <h2 className="text-md">Submitted Data</h2>
             {/* Map over the submittedData array and display each object */}
-            {submittedData.map((data, index) => (
-              <div key={index}>
-                <p>Amount: {data.amount}</p>
-                <p>Date: {data.date}</p>
-                <p>Category: {data.category}</p>
-              </div>
-            ))}
+            <table>
+              <thead>
+                <tr>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {submittedData.map((data, index) => (
+                  <tr key={index}>
+                    <td>{data.amount}</td>
+                    <td>{data.date}</td>
+                    <td>{data.category}</td>
+                    <td>
+                      <button onClick={() => handleEdit(index)}>Edit</button>
+                    </td>
+                    <td>
+                      <button onClick={() => handleDelete(index)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
