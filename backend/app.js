@@ -27,7 +27,7 @@ const Income = require("./routes/income");
 
 // Load the expense routes
 const Expense = require("./routes/expense");
-
+const auth = require("./routes/auth")
 // Define the port to listen on, using the environment variable or defaulting to 8000
 const port = process.env.PORT || 8000;
 
@@ -44,6 +44,9 @@ app.use(Expense);
 app.get("/",(req,res)=>{
   res.json("server start")
 })
+
+app.use(auth)
+
 
 // Start the server and listen on the specified port
 app.listen(port, () => {
