@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const Register = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const goToLogin = () => {
-    //navigate to login
-    navigate("/")
+    navigate("/");
   };
 
+  const [isLoggedin, setIsLoggedin] = [false];
  
+
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -22,7 +23,32 @@ const Register = () => {
   };
 
   const register = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    const { name, email, password, cpassword } = credentials;
+    if (password === cpassword) {
+      const response = await fetch(
+        "http://localhost:8000/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        }
+      );
+      const json = await response.json();
+      //console.log(json);
+      if (json.success) {
+        // Save the auth token and redirect
+        localStorage.setItem("authtoken", json.authtoken);
+        navigate("/dashboard");
+      }
+      
+        if (json.error === "Sorry a user with this email already exists") {
+        }
+      
+    } else {
+    }
   };
 
   return (
