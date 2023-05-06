@@ -11,9 +11,17 @@ const incomeSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required: false,
+        
     },
     
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
 });
 
 const income = new mongoose.model("income",incomeSchema);
+
+
+module.exports = income;
