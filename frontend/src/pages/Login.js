@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({}) => {
+const Login = ({setIsLoggedin}) => {
+  const navigate = useNavigate();
 
-const navigate = useNavigate()
+//   const alert = useAlert();
 
   const goToRegister = () => {
-    //handle go to register
-    navigate("/register")
+    navigate("/register");
   };
 
+  // const [isLoggedin, setIsLoggedin] = useState(false);
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
 
@@ -19,7 +20,29 @@ const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const response = await fetch("http://localhost:8000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: credentials.email,
+        password: credentials.password,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    if (json.success) {
+      // Save the auth token and redirect
+      localStorage.setItem("authtoken", json.authtoken);
+      setIsLoggedin(true);
+      navigate("/dashboard");
+    //   alert.show("Successfully logged in.")
+    } else {
+    //   alert.show("Invalid credentials, try again");
+    }
   };
+
 
 
 
