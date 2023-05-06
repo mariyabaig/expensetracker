@@ -16,11 +16,16 @@ const userSchema = new Schema({
     password:{
         type: String,
         required: true,
-    }
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        default: mongoose.Types.ObjectId
+      }
 
 });
 
 
 const User = mongoose.model("user", userSchema);
-User.createIndexes();
+
 module.exports = User;
