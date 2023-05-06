@@ -4,6 +4,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+var fetchUser = require('../middleware/fetchUser');
 require('dotenv').config()
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -97,7 +98,20 @@ router.post('/login', [
 
 
 });
-
+// ROUTE 3: Get loggedin User Details using: POST "/getuser". Login required
+router.post('/getuser', fetchUser, async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const user = await User.findById(userId).select("name email");
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+      res.json({ userId: userId, name: user.name, email: user.email });
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal Server Error");
+    }
+  });
 
 
 
