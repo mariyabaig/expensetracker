@@ -12,29 +12,58 @@ const Expenses = () => {
   const [editIndex, setEditIndex] = useState(null);
 
   // Handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = {
-      amount: expense.amount,
-      date: expense.date,
-      category: expense.category,
-    };
-    if (editIndex !== null) {
-      // Edit existing data object
-      const newData = [...submittedData];
-      newData[editIndex] = data;
-      setSubmittedData(newData);
-      setEditIndex(null);
-    } else {
-      // Add new data object
-      setSubmittedData([...submittedData, data]);
+    const data = expense;
+    try {
+      const response = await fetch("http://localhost:8000/addexpense", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          authtoken: localStorage.getItem("authtoken"),
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const newExpense = await response.json();
+      setSubmittedData([...submittedData, newExpense]);
+      setExpense({
+        amount: "",
+        date: "",
+        category: "",
+      });
+    } catch (err) {
+      console.error(err);
+      // Handle error
     }
-    setExpense({
-      amount: "",
-      date: "",
-      category: "",
-    });
   };
+  
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = {
+  //     amount: expense.amount,
+  //     date: expense.date,
+  //     category: expense.category,
+  //   };
+  //   if (editIndex !== null) {
+  //     // Edit existing data object
+  //     const newData = [...submittedData];
+  //     newData[editIndex] = data;
+  //     setSubmittedData(newData);
+  //     setEditIndex(null);
+  //   } else {
+  //     // Add new data object
+  //     setSubmittedData([...submittedData, data]);
+  //   }
+  //   setExpense({
+  //     amount: "",
+  //     date: "",
+  //     category: "",
+  //   });
+  // };
 
   const handleEdit = (index) => {
     setEditIndex(index);
