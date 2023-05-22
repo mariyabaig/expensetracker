@@ -199,31 +199,37 @@ const Expenses = () => {
             <p>Category: {submittedData.category}</p>
           </div>
         )} */}
-            <h2 className="font-bold">Submitted Data</h2>
-            {/* Map over the submittedData array and display each object */}
-            <table>
-          
+    {Object.entries(groupedData).map(([month,data])=>(
+      <>
+      <h2 key={month} className="font-bold">{month}'s total :{data.total}</h2>
+      {/* Map over the submittedData array and display each object */}
+      <table>
+    
+       
+          {submittedData.map((item, index) => (
+              <tr key={index}>
+              <td>{item.amount}</td>
+              <td>{item.category}</td>
+              <td>{DateTime.fromISO(item.date).toFormat(
+                            "dd LLL yy"
+                          )}</td>
+            <span>
+            <button onClick={() => handleEdit(item)}>Edit</button>
              
-                {submittedData.map((data, index) => (
-                  <tr key={index}>
-                    <td>{data.amount}</td>
-                    <td>{data.category}</td>
-                    <td>{DateTime.fromISO(data.date).toFormat(
-                                  "dd LLL yy"
-                                )}</td>
-                  <span>
-                  <button onClick={() => handleEdit(index)}>Edit</button>
-                   
-                   <button onClick={() => handleDelete(index)}>
-                     Delete
-                   </button>
-                  </span>
-                  
-                   
-                  </tr>
-                ))}
+             <button onClick={() => handleDelete(item)}>
+               Delete
+             </button>
+            </span>
             
-            </table>
+             
+            </tr>
+          ))}
+      
+      </table>
+      </>
+
+    ))}
+            
           </div>
         )}
       </div>
