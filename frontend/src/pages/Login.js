@@ -35,7 +35,7 @@ const Login = ({setIsLoggedin}) => {
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("authtoken", json.authtoken);
-      setIsLoggedin(true);
+       
       navigate("/dashboard");
     //   alert.show("Successfully logged in.")
     } else {
