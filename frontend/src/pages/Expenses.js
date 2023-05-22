@@ -122,6 +122,12 @@ const Expenses = () => {
       return results;
     }, {});
   }
+  //submitting submittedData into groupByMonth
+  const groupedData = groupByMonth(submittedData);
+
+
+
+
   return (
     <>
       <div className="flex flex-row">
