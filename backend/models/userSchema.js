@@ -20,7 +20,7 @@ const userSchema = new Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        default: mongoose.Types.ObjectId
+        default: () => new mongoose.Types.ObjectId(),
       }
 
 });
