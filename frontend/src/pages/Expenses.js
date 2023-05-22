@@ -110,6 +110,18 @@ const Expenses = () => {
   //  It is initialized to null because no data has been submitted yet
   // const [submittedData, setSubmittedData] = useState(null);
 
+  //Grouping submitted data according to months
+  const groupByMonth=(data)=>{
+    return data.reduce((results,curr)=>{
+      const date = new Date(curr.date)
+      const month = date.toLocaleString("default", { month: "long" })
+      if (!results[month]){
+        results[month] = { data: [], total: 0 };
+      }
+      results[month].total += parseInt(curr.amount);
+      return results;
+    }, {});
+  }
   return (
     <>
       <div className="flex flex-row">
