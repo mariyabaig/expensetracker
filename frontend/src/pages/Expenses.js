@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { DateTime } from "luxon";
 const Expenses = () => {
   // Set up state for the form inputs and submitted data
@@ -10,6 +10,32 @@ const Expenses = () => {
   // Set up an array to store submitted data
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  
+  //fetching saved expenses of logged in user
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/expenses", {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            authtoken: localStorage.getItem("authtoken"),
+            // "Authorization": `Bearer ${token}` // Send the token in the Authorization header
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setSubmittedData(data);
+      } catch (err) {
+        console.error(err);
+        // Handle error
+      }
+    };
+    fetchExpenses();
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (event) => {
