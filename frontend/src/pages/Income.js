@@ -15,7 +15,7 @@ const Income = () => {
   useEffect(() => {
     const fetchIncome = async () => {
       try {
-        const response = await fetch("http://localhost:8000/expenses", {
+        const response = await fetch("http://localhost:8000/income", {
           method: "GET",
           mode: "cors",
           headers: {
