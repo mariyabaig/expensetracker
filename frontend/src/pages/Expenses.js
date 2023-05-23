@@ -208,7 +208,7 @@ const Expenses = () => {
                   {/* Map over the submittedData array and display each object */}
                   {selectedMonth === month && (
                     <table>
-                      {submittedData.map((item, index) => (
+                      {data.data.map((item, index) => (
                         <tr key={index}>
                           <td>{item.amount}</td>
                           <td>{item.category}</td>
