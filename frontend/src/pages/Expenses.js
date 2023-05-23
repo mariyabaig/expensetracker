@@ -214,9 +214,9 @@ const Expenses = () => {
                             "dd LLL yy"
                           )}</td>
             <span>
-            <button onClick={() => handleEdit(item)}>Edit</button>
+            <button onClick={() => handleEdit(index)}>Edit</button>
              
-             <button onClick={() => handleDelete(item)}>
+             <button onClick={() => handleDelete(index)}>
                Delete
              </button>
             </span>
