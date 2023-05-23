@@ -130,6 +130,26 @@ const Expenses = () => {
   const handleMonthClick = (month) => {
     setSelectedMonth((prevMonth) => (prevMonth === month ? null : month));
   };
+
+  const todaysData = (data) => {
+    const today = DateTime.local().toISODate(); // Get today's date in ISO format
+    return data.reduce((results, curr) => {
+      const currDate = DateTime.fromISO(curr.date).toISODate(); // Convert expense date to ISO format
+      if (currDate === today) {
+        // Compare expense date with today's date
+        if (!results[today]) {
+          results[today] = { data: [], total: 0 };
+        }
+        results[today].data.push(curr); // Push current data item to today's data array
+        results[today].total += parseInt(curr.amount); // Add current data item's amount to today's total
+      }
+      return results;
+    }, {});
+  };
+
+  const today = DateTime.local().toISODate();
+  const todaysExpense = todaysData(submittedData)[today]; // Call todaysData function to get today's data
+
   return (
     <>
       <div className="flex flex-row">
@@ -200,6 +220,42 @@ const Expenses = () => {
             <p>Category: {submittedData.category}</p>
             </div>
             )} */}
+            <div className="flex">
+                <div className="flex flex-row ">
+                  {todaysExpense && todaysExpense.total && (
+                    <div className="card my-3 text-center">
+                      <div className="card-overlay"></div>
+                      <h3 className="text-md text-center font-bold">
+                        {DateTime.local().toFormat("dd LLL yyyy")}'s Expenses
+                      </h3>
+                      <p>Total: ${todaysExpense.total}</p>
+                      <table>
+                        <thead>
+                          <tr className="">
+                            <th>Category</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {todaysExpense.data.map((expense, index) => (
+                            <tr key={index}>
+                              <td>{expense.category}</td>
+                              <td>${expense.amount}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {(!todaysExpense || !todaysExpense.total) && (
+                    <div>
+                      <h3>Today's expense</h3>
+                      <p>No data for today</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             {Object.entries(groupedData).map(([month, data]) => (
               <>
                 <div className="card my-5 mx-5">
