@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { DateTime } from "luxon";
 
 const Income = () => {
@@ -10,6 +10,32 @@ const Income = () => {
 
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState();
+
+  useEffect(() => {
+    const fetchIncome = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/expenses", {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            authtoken: localStorage.getItem("authtoken"),
+            // "Authorization": `Bearer ${token}` // Send the token in the Authorization header
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setSubmittedData(data);
+      } catch (err) {
+        console.error(err);
+        // Handle error
+      }
+    };
+    fetchIncome();
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -73,6 +99,10 @@ const Income = () => {
 
   const groupedData = groupByMonth(submittedData);
 
+  const handleMonthClick = (month) => {
+    setSelectedMonth((prevMonth) => (prevMonth === month ? null : month));
+  };
+
   return (
     <>
       <div className="flex flex-row">
@@ -128,7 +158,7 @@ const Income = () => {
               {Object.entries(groupedData).map(([month, data]) => (
                 <div className="card" key={month}>
                   <div className="card-overlay"></div>
-                  <h2 className="font-bold">{month}'s total : {data.total}</h2>
+                  <h2 onClick={()=>handleMonthClick(month)} className="font-bold">{month}'s total : {data.total}</h2>
                   <table>
                     <tbody>
                       {data.data.map((item, index) => (
