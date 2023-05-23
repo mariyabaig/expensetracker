@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { DateTime } from "luxon";
+import {
+  groupByMonth,
+  calculateTotal,
+  todaysData,
+  handleMonthClick,
+} from "../util";
+
 const Expenses = () => {
-  // Set up state for the form inputs and submitted data
   const [expense, setExpense] = useState({
     amount: "",
     date: "",
     category: "",
   });
-  // Set up an array to store submitted data
+
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState();
 
-  //fetching saved expenses of logged in user
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
@@ -22,7 +27,6 @@ const Expenses = () => {
           headers: {
             "Content-Type": "application/json",
             authtoken: localStorage.getItem("authtoken"),
-            // "Authorization": `Bearer ${token}` // Send the token in the Authorization header
           },
         });
         if (!response.ok) {
@@ -38,7 +42,6 @@ const Expenses = () => {
     fetchExpenses();
   }, []);
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = expense;
@@ -68,30 +71,6 @@ const Expenses = () => {
     }
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = {
-  //     amount: expense.amount,
-  //     date: expense.date,
-  //     category: expense.category,
-  //   };
-  //   if (editIndex !== null) {
-  //     // Edit existing data object
-  //     const newData = [...submittedData];
-  //     newData[editIndex] = data;
-  //     setSubmittedData(newData);
-  //     setEditIndex(null);
-  //   } else {
-  //     // Add new data object
-  //     setSubmittedData([...submittedData, data]);
-  //   }
-  //   setExpense({
-  //     amount: "",
-  //     date: "",
-  //     category: "",
-  //   });
-  // };
-
   const handleEdit = (index) => {
     setEditIndex(index);
     setExpense(submittedData[index]);
@@ -102,53 +81,12 @@ const Expenses = () => {
     newData.splice(index, 1);
     setSubmittedData(newData);
   };
-  //sum of all the submitted expenses using reduce
-  const totalExpenses = submittedData.reduce((total, data) => {
-    return total + parseInt(data.amount);
-  }, 0);
 
-  // This state variable is used to store the submitted data from the form
-  //  It is initialized to null because no data has been submitted yet
-  // const [submittedData, setSubmittedData] = useState(null);
+  const totalExpenses = calculateTotal(submittedData);
 
-  //Grouping submitted data according to months
-  const groupByMonth = (data) => {
-    return data.reduce((results, curr) => {
-      const date = new Date(curr.date);
-      const month = date.toLocaleString("default", { month: "long" });
-      if (!results[month]) {
-        results[month] = { data: [], total: 0 };
-      }
-      results[month].total += parseInt(curr.amount);
-      return results;
-    }, {});
-  };
-  //submitting submittedData into groupByMonth
   const groupedData = groupByMonth(submittedData);
 
-  //select month
-  const handleMonthClick = (month) => {
-    setSelectedMonth((prevMonth) => (prevMonth === month ? null : month));
-  };
-
-  const todaysData = (data) => {
-    const today = DateTime.local().toISODate(); // Get today's date in ISO format
-    return data.reduce((results, curr) => {
-      const currDate = DateTime.fromISO(curr.date).toISODate(); // Convert expense date to ISO format
-      if (currDate === today) {
-        // Compare expense date with today's date
-        if (!results[today]) {
-          results[today] = { data: [], total: 0 };
-        }
-        results[today].data.push(curr); // Push current data item to today's data array
-        results[today].total += parseInt(curr.amount); // Add current data item's amount to today's total
-      }
-      return results;
-    }, {});
-  };
-
-  const today = DateTime.local().toISODate();
-  const todaysExpense = todaysData(submittedData)[today]; // Call todaysData function to get today's data
+  const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
 
   return (
     <>
@@ -263,7 +201,7 @@ const Expenses = () => {
                   <h2
                     key={month}
                     className="font-bold"
-                    onClick={() => handleMonthClick(month)}
+                    onClick={() => handleMonthClick(month,selectedMonth,setSelectedMonth)}
                   >
                     {month}'s total :{data.total}
                   </h2>
