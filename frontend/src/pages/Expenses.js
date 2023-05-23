@@ -10,6 +10,7 @@ const Expenses = () => {
   // Set up an array to store submitted data
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [selectedMonth,setSelectedMonth] = useState()
 
   //fetching saved expenses of logged in user
   useEffect(() => {
@@ -125,6 +126,11 @@ const Expenses = () => {
   //submitting submittedData into groupByMonth
   const groupedData = groupByMonth(submittedData);
 
+
+  //select month
+const handleMonthClick =(month)=>{
+  setSelectedMonth((prevMonth)=>(prevMonth===month? null : month))
+}
   return (
     <>
       <div className="flex flex-row">
@@ -200,30 +206,35 @@ const Expenses = () => {
               <>
                 <div className="card my-5 mx-5">
                   <div className="card-overlay"></div>
-                  <h2 key={month} className="font-bold">
+                  <h2 key={month} className="font-bold" onClick={()=>handleMonthClick(month)}>
                     {month}'s total :{data.total}
+                    
                   </h2>
                   {/* Map over the submittedData array and display each object */}
-                  <table>
-                    {submittedData.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.amount}</td>
-                        <td>{item.category}</td>
-                        <td>
-                          {DateTime.fromISO(item.date).toFormat("dd LLL yy")}
-                        </td>
-                        <span>
-                          <button onClick={() => handleEdit(index)}>
-                            Edit
-                          </button>
+                  {selectedMonth === month && (
+                     <table>
+                     {submittedData.map((item, index) => (
+                       <tr key={index}>
+                         <td>{item.amount}</td>
+                         <td>{item.category}</td>
+                         <td>
+                           {DateTime.fromISO(item.date).toFormat("dd LLL yy")}
+                         </td>
+                         <span>
+                           <button onClick={() => handleEdit(index)}>
+                             Edit
+                           </button>
+ 
+                           <button onClick={() => handleDelete(index)}>
+                             Delete
+                           </button>
+                         </span>
+                       </tr>
+                     ))}
+                   </table>
 
-                          <button onClick={() => handleDelete(index)}>
-                            Delete
-                          </button>
-                        </span>
-                      </tr>
-                    ))}
-                  </table>
+                  )}
+                 
                 </div>
               </>
             ))}
