@@ -89,8 +89,8 @@ const Income = () => {
 
   const groupedData = groupByMonth(submittedData);
 
-  const todaysIncome = todaysData(submittedData);
-
+  const todaysIncome = todaysData(submittedData)[DateTime.local().toISODate()];
+console.log(todaysIncome)
 
   return (
     <>
@@ -146,38 +146,37 @@ const Income = () => {
             <>
               <div className="flex">
                 <div className="flex flex-row ">
-                  {todaysIncome && todaysIncome.total && (
-                    <div className="card my-3 text-center">
-                      <div className="card-overlay"></div>
-                      <h3 className="text-md text-center font-bold">
-                        {DateTime.local().toFormat("dd LLL yyyy")}'s Incomes
-                      </h3>
-                      <p>Total: ${todaysIncome.total}</p>
-                      <table>
-                        <thead>
-                          <tr className="">
-                            <th>Category</th>
-                            <th>Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {todaysIncome.data.map((income, index) => (
-                            <tr key={index}>
-                              <td>{income.category}</td>
-                              <td>${income.amount}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
+                {todaysIncome && todaysIncome.total !== 0 ? (
+  <div className="card my-3 text-center">
+    <div className="card-overlay"></div>
+    <h3 className="text-md text-center font-bold">
+      {DateTime.local().toFormat("dd LLL yyyy")}'s Incomes
+    </h3>
+    <p>Total: ${todaysIncome.total}</p>
+    <table>
+      <thead>
+        <tr className="">
+          <th>Category</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {todaysIncome.data && todaysIncome.data.map((income, index) => (
+          <tr key={index}>
+            <td>{income.category}</td>
+            <td>${income.amount}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : (
+  <div>
+    <h3>Today's Income</h3>
+    <p>No data for today</p>
+  </div>
+)}
 
-                  {(!todaysIncome || !todaysIncome.total) && (
-                    <div>
-                      <h3>Today's Income</h3>
-                      <p>No data for today</p>
-                    </div>
-                  )}
                 </div>
               </div>
               {Object.entries(groupedData).map(([month, data]) => (
