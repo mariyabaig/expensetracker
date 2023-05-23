@@ -5,7 +5,10 @@ import {
   calculateTotal,
   todaysData,
   handleMonthClick,
+  groupByCategory
 } from "../util";
+import "chart.js/auto";
+import { Pie } from "react-chartjs-2";
 
 const Income = () => {
   const [income, setIncome] = useState({
@@ -92,6 +95,8 @@ const Income = () => {
   const todaysIncome = todaysData(submittedData)[DateTime.local().toISODate()];
 console.log(todaysIncome)
 
+const groupIncomeByCategory = groupByCategory(submittedData)
+
   return (
     <>
       <div className="flex flex-row">
@@ -169,6 +174,28 @@ console.log(todaysIncome)
         ))}
       </tbody>
     </table>
+    <Pie
+                        data={{
+                          labels: todaysIncome.data.map(
+                            (expense) => expense.category
+                          ),
+                          datasets: [
+                            {
+                              data: Object.values(
+                                todaysIncome.data.reduce((acc, expense) => {
+                                  if (!acc[expense.category]) {
+                                    acc[expense.category] = 0;
+                                  }
+                                  acc[expense.category] += parseInt(
+                                    expense.amount
+                                  );
+                                  return acc;
+                                }, {})
+                              ),
+                            },
+                          ],
+                        }}
+                      />
   </div>
 ) : (
   <div>
