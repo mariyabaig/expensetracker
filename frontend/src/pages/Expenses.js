@@ -91,7 +91,7 @@ const Expenses = () => {
 
   const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
 
-  const groupExpensesByCategory = groupByCategory(submittedData)
+  const groupExpensesByCategory = groupByCategory(submittedData, "expense");
 
   return (
     <>
@@ -235,6 +235,20 @@ const Expenses = () => {
                   </h2>
                   {/* Map over the submittedData array and display each object */}
                   {selectedMonth === month && (
+                    <>
+                    {/* <Pie
+                        data={{
+                          labels: Object.keys(groupExpensesByCategory[selectedMonth]),
+                          datasets: [
+                            {
+                              data: Object.values(
+                                groupExpensesByCategory[selectedMonth]
+                              ),
+                            },
+                          ],
+                        }}
+                      /> */}
+                   
                     <table>
                       {data.data.map((item, index) => (
                         <tr key={index}>
@@ -255,6 +269,7 @@ const Expenses = () => {
                         </tr>
                       ))}
                     </table>
+                    </>
                   )}
                 </div>
               </>

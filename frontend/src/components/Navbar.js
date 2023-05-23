@@ -5,12 +5,12 @@ import expensesIcon from "../assets/expenses.png";
 import shutdown from "../assets/shutdown.png";
 import incomeIcon from "../assets/income.png";
 
-const Navbar = () => {
+const Navbar = ({setIsLoggedin}) => {
     const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.clear();
-    //setIsLoggedin(false);
+    setIsLoggedin(false);
     navigate('/');
   };
   return (

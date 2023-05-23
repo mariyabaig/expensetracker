@@ -1,27 +1,45 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
-import Dashboard from './pages/Dashboard';
-import Income from './pages/Income';
-import Expenses from './pages/Expenses';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import Expenses from './pages/Expenses';
+import Income from './pages/Income';
+import './App.css';
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import { useState } from "react";
 
-function App() {
+function App() { 
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLoggedin(false);
+    
+  }
   return (
-   <>
-   <BrowserRouter>
-  <Navbar/>
-   <Routes>
-   <Route exact path = "/" element={<Login/>}/>
-   <Route exact path = "/register" element={<Register/>}/>
-    <Route exact path = "/dashboard" element={<Dashboard/>}/>
-    <Route exact path = "/income" element={<Income/>}/>
-    <Route exact path = "/expenses" element={<Expenses/>}/>
-   </Routes>
-   </BrowserRouter>
-   </>
+    <BrowserRouter>
+      <Navbar isLoggedin={isLoggedin} handleLogout={handleLogout} />
+      <Routes>
+        <Route
+          exact
+          path="/dashboard"
+          element={isLoggedin ? <Dashboard setIsLoggedin={setIsLoggedin}/> : <Login setIsLoggedin={setIsLoggedin}/> }
+        />
+        <Route
+          exact
+          path="/income"
+          element={isLoggedin ? <Income setIsLoggedin={setIsLoggedin}/> : <Login setIsLoggedin={setIsLoggedin}/> }
+        />
+        <Route
+          exact
+          path="/expenses"
+          element={isLoggedin ? <Expenses setIsLoggedin={setIsLoggedin}/> : <Login setIsLoggedin={setIsLoggedin}/> }
+        />
+        <Route exact path="/" element={<Login setIsLoggedin={setIsLoggedin}/>} ></Route> 
+        <Route path="/register" element={<Register/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
+

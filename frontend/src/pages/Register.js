@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Register = ({setIsLoggedin}) => {
   const navigate = useNavigate();
 
   const goToLogin = () => {
     navigate("/");
   };
 
-  const [isLoggedin, setIsLoggedin] = [false];
  
 
   const [credentials, setCredentials] = useState({
@@ -42,6 +41,7 @@ const Register = () => {
         // Save the auth token and redirect
         localStorage.setItem("authtoken", json.authtoken);
         navigate("/dashboard");
+        setIsLoggedin(true)
       }
       
         if (json.error === "Sorry a user with this email already exists") {
