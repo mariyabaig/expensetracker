@@ -58,6 +58,21 @@ const Income = () => {
     return total + parseInt(data.amount);
   }, 0);
 
+  const groupByMonth = (data) => {
+    return data.reduce((results, curr) => {
+      const date = new Date(curr.date);
+      const month = date.toLocaleString("default", { month: "long" });
+      if (!results[month]) {
+        results[month] = { data: [], total: 0 };
+      }
+      results[month].data.push(curr);
+      results[month].total += parseInt(curr.amount);
+      return results;
+    }, {});
+  };
+
+  const groupedData = groupByMonth(submittedData);
+
   return (
     <>
       <div className="flex flex-row">
@@ -107,31 +122,42 @@ const Income = () => {
           </form>
         </div>
 
-        {submittedData.length > 0 && (
-          <div className="card  my-5 mx-5">
-            <div className="card-overaly"></div>
-            <h2 className="font-bold">Submitted Data</h2>
-            <table>
-              <tbody>
-                {submittedData.map((data, index) => (
-                  <tr key={index}>
-                    <td>{data.amount}</td>
-                    <td>{data.category}</td>
-                    <td>
-                      {DateTime.fromISO(data.date).toFormat("dd LLL yy")}
-                    </td>
-                    <td>
-                      <button onClick={() => handleEdit(index)}>Edit</button>
-                      <button onClick={() => handleDelete(index)}>
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <div className="my-5 mx-5">
+          {submittedData.length > 0 ? (
+            <>
+              {Object.entries(groupedData).map(([month, data]) => (
+                <div className="card" key={month}>
+                  <div className="card-overlay"></div>
+                  <h2 className="font-bold">{month}'s total : {data.total}</h2>
+                  <table>
+                    <tbody>
+                      {data.data.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.amount}</td>
+                          <td>{item.category}</td>
+                          <td>
+                            {DateTime.fromISO(item.date).toFormat("dd LLL yy")}
+                          </td>
+                          <td>
+                            <button onClick={() => handleEdit(index)}>
+                              Edit
+                            </button>
+                            <button onClick={() => handleDelete(index)}>
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+  
+                </div>
+              ))}
+            </>
+          ) : (
+            <span>No submitted data</span>
+          )}
+        </div>
       </div>
     </>
   );
