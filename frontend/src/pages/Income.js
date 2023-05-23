@@ -159,6 +159,8 @@ const Income = () => {
                 <div className="card" key={month}>
                   <div className="card-overlay"></div>
                   <h2 onClick={()=>handleMonthClick(month)} className="font-bold">{month}'s total : {data.total}</h2>
+
+                  {selectedMonth === month && (
                   <table>
                     <tbody>
                       {data.data.map((item, index) => (
@@ -179,7 +181,7 @@ const Income = () => {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table> )}
   
                 </div>
               ))}
