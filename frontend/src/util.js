@@ -39,3 +39,17 @@ export const groupByMonth = (data) => {
     setSelectedMonth((prevMonth) => (prevMonth === month ? null : month));
   };
   
+
+  export const groupByCategory = (data, type) => {
+    return data.reduce((results, item) => {
+      const category = item.category;
+      if (!results[category]) {
+        results[category] = {};
+      }
+      if (!results[category][type]) {
+        results[category][type] = 0;
+      }
+      results[category][type] += parseInt(item.amount);
+      return results;
+    }, {});
+  };
