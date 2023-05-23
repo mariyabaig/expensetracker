@@ -10,7 +10,7 @@ const Expenses = () => {
   // Set up an array to store submitted data
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
-  const [selectedMonth,setSelectedMonth] = useState()
+  const [selectedMonth, setSelectedMonth] = useState();
 
   //fetching saved expenses of logged in user
   useEffect(() => {
@@ -126,11 +126,10 @@ const Expenses = () => {
   //submitting submittedData into groupByMonth
   const groupedData = groupByMonth(submittedData);
 
-
   //select month
-const handleMonthClick =(month)=>{
-  setSelectedMonth((prevMonth)=>(prevMonth===month? null : month))
-}
+  const handleMonthClick = (month) => {
+    setSelectedMonth((prevMonth) => (prevMonth === month ? null : month));
+  };
   return (
     <>
       <div className="flex flex-row">
@@ -185,9 +184,8 @@ const handleMonthClick =(month)=>{
           </form>
         </div>
         {/* Display submitted data if there is any */}
-        {submittedData.length > 0 && (
+        {submittedData.length > 0 ? (
           <div className=" my-5 mx-5">
-           
             {/* This block of code is conditional rendering
             It only renders if submittedData is not null (meaning data has been submitted)
             It displays the submitted data in a card format
@@ -206,40 +204,41 @@ const handleMonthClick =(month)=>{
               <>
                 <div className="card my-5 mx-5">
                   <div className="card-overlay"></div>
-                  <h2 key={month} className="font-bold" onClick={()=>handleMonthClick(month)}>
+                  <h2
+                    key={month}
+                    className="font-bold"
+                    onClick={() => handleMonthClick(month)}
+                  >
                     {month}'s total :{data.total}
-                    
                   </h2>
                   {/* Map over the submittedData array and display each object */}
                   {selectedMonth === month && (
-                     <table>
-                     {submittedData.map((item, index) => (
-                       <tr key={index}>
-                         <td>{item.amount}</td>
-                         <td>{item.category}</td>
-                         <td>
-                           {DateTime.fromISO(item.date).toFormat("dd LLL yy")}
-                         </td>
-                         <span>
-                           <button onClick={() => handleEdit(index)}>
-                             Edit
-                           </button>
- 
-                           <button onClick={() => handleDelete(index)}>
-                             Delete
-                           </button>
-                         </span>
-                       </tr>
-                     ))}
-                   </table>
+                    <table>
+                      {submittedData.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.amount}</td>
+                          <td>{item.category}</td>
+                          <td>
+                            {DateTime.fromISO(item.date).toFormat("dd LLL yy")}
+                          </td>
+                          <span>
+                            <button onClick={() => handleEdit(index)}>
+                              Edit
+                            </button>
 
+                            <button onClick={() => handleDelete(index)}>
+                              Delete
+                            </button>
+                          </span>
+                        </tr>
+                      ))}
+                    </table>
                   )}
-                 
                 </div>
               </>
             ))}
           </div>
-        )}
+        ) :   (<span>No data submitted yet</span>)} 
       </div>
     </>
   );
