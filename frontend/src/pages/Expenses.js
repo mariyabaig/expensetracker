@@ -238,7 +238,9 @@ const Expenses = () => {
               </>
             ))}
           </div>
-        ) :   (<span>No data submitted yet</span>)} 
+        ) : (
+          <span>No data submitted yet</span>
+        )}
       </div>
     </>
   );
