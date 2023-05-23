@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { DateTime } from "luxon";
+import {
+  groupByMonth,
+  calculateTotal,
+  todaysData,
+  handleMonthClick,
+} from "../util";
 
 const Income = () => {
   const [income, setIncome] = useState({
@@ -21,7 +27,6 @@ const Income = () => {
           headers: {
             "Content-Type": "application/json",
             authtoken: localStorage.getItem("authtoken"),
-            // "Authorization": `Bearer ${token}` // Send the token in the Authorization header
           },
         });
         if (!response.ok) {
@@ -80,47 +85,12 @@ const Income = () => {
     setSubmittedData(newData);
   };
 
-  const totalIncome = submittedData.reduce((total, data) => {
-    return total + parseInt(data.amount);
-  }, 0);
-
-  const groupByMonth = (data) => {
-    return data.reduce((results, curr) => {
-      const date = new Date(curr.date);
-      const month = date.toLocaleString("default", { month: "long" });
-      if (!results[month]) {
-        results[month] = { data: [], total: 0 };
-      }
-      results[month].data.push(curr);
-      results[month].total += parseInt(curr.amount);
-      return results;
-    }, {});
-  };
+  const totalIncome = calculateTotal(submittedData);
 
   const groupedData = groupByMonth(submittedData);
 
-  const handleMonthClick = (month) => {
-    setSelectedMonth((prevMonth) => (prevMonth === month ? null : month));
-  };
+  const todaysIncome = todaysData(submittedData);
 
-  const todaysData = (data) => {
-    const today = DateTime.local().toISODate(); // Get today's date in ISO format
-    return data.reduce((results, curr) => {
-      const currDate = DateTime.fromISO(curr.date).toISODate(); // Convert income date to ISO format
-      if (currDate === today) {
-        // Compare income date with today's date
-        if (!results[today]) {
-          results[today] = { data: [], total: 0 };
-        }
-        results[today].data.push(curr); // Push current data item to today's data array
-        results[today].total += parseInt(curr.amount); // Add current data item's amount to today's total
-      }
-      return results;
-    }, {});
-  };
-
-  const today = DateTime.local().toISODate();
-  const todaysIncome = todaysData(submittedData)[today]; // Call todaysData function to get today's data
 
   return (
     <>
@@ -213,7 +183,7 @@ const Income = () => {
               {Object.entries(groupedData).map(([month, data]) => (
                 <div className="card" key={month}>
                   <div className="card-overlay"></div>
-                  <h2 onClick={() => handleMonthClick(month)} className="font-bold">
+                  <h2 onClick={() => handleMonthClick(month, selectedMonth, setSelectedMonth)} className="font-bold">
                     {month}'s total: {data.total}
                   </h2>
 
