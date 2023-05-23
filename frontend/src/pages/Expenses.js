@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { DateTime } from "luxon";
 const Expenses = () => {
   // Set up state for the form inputs and submitted data
@@ -10,7 +10,7 @@ const Expenses = () => {
   // Set up an array to store submitted data
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
-  
+
   //fetching saved expenses of logged in user
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -66,7 +66,7 @@ const Expenses = () => {
       // Handle error
     }
   };
-  
+
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   //   const data = {
@@ -111,22 +111,19 @@ const Expenses = () => {
   // const [submittedData, setSubmittedData] = useState(null);
 
   //Grouping submitted data according to months
-  const groupByMonth=(data)=>{
-    return data.reduce((results,curr)=>{
-      const date = new Date(curr.date)
-      const month = date.toLocaleString("default", { month: "long" })
-      if (!results[month]){
+  const groupByMonth = (data) => {
+    return data.reduce((results, curr) => {
+      const date = new Date(curr.date);
+      const month = date.toLocaleString("default", { month: "long" });
+      if (!results[month]) {
         results[month] = { data: [], total: 0 };
       }
       results[month].total += parseInt(curr.amount);
       return results;
     }, {});
-  }
+  };
   //submitting submittedData into groupByMonth
   const groupedData = groupByMonth(submittedData);
-
-
-
 
   return (
     <>
@@ -136,7 +133,7 @@ const Expenses = () => {
           <h3 className="font-bold">Total Expenses : {totalExpenses}</h3>
           <form onSubmit={handleSubmit}>
             {/* render sum of all the submitted expenses */}
-           
+
             <label className="flex flex-row items-center text-left px-3 py-2">
               Expense Amount
               <input
@@ -148,7 +145,7 @@ const Expenses = () => {
                 required
               />
             </label>
-              <label className="flex flex-row items-center text-left px-3 py-2">
+            <label className="flex flex-row items-center text-left px-3 py-2">
               Date
               <input
                 type="date"
@@ -159,7 +156,7 @@ const Expenses = () => {
                 required
               />
             </label>
-              <label className="flex flex-row items-center text-left px-3 py-2">
+            <label className="flex flex-row items-center text-left px-3 py-2">
               Category
               <select
                 value={expense.category}
@@ -183,53 +180,53 @@ const Expenses = () => {
         </div>
         {/* Display submitted data if there is any */}
         {submittedData.length > 0 && (
-          <div className="card  my-5 mx-5">
-            <div className="card-overaly"></div>
+          <div className=" my-5 mx-5">
+           
             {/* This block of code is conditional rendering
- It only renders if submittedData is not null (meaning data has been submitted)
- It displays the submitted data in a card format
- The submitted data is accessed from the submittedData state variable
- Each piece of data (amount, date, category) is displayed in a separate <p> element */}
+            It only renders if submittedData is not null (meaning data has been submitted)
+            It displays the submitted data in a card format
+           The submitted data is accessed from the submittedData state variable
+           Each piece of data (amount, date, category) is displayed in a separate <p> element */}
             {/* {submittedData && (
-          <div className="card">
+            <div className="card">
             <div className="card-overlay"></div>
             <h2>Submitted Data</h2>
             <p>Amount: {submittedData.amount}</p>
             <p>Date: {submittedData.date}</p>
             <p>Category: {submittedData.category}</p>
-          </div>
-        )} */}
-    {Object.entries(groupedData).map(([month,data])=>(
-      <>
-      <h2 key={month} className="font-bold">{month}'s total :{data.total}</h2>
-      {/* Map over the submittedData array and display each object */}
-      <table>
-    
-       
-          {submittedData.map((item, index) => (
-              <tr key={index}>
-              <td>{item.amount}</td>
-              <td>{item.category}</td>
-              <td>{DateTime.fromISO(item.date).toFormat(
-                            "dd LLL yy"
-                          )}</td>
-            <span>
-            <button onClick={() => handleEdit(index)}>Edit</button>
-             
-             <button onClick={() => handleDelete(index)}>
-               Delete
-             </button>
-            </span>
-            
-             
-            </tr>
-          ))}
-      
-      </table>
-      </>
+            </div>
+            )} */}
+            {Object.entries(groupedData).map(([month, data]) => (
+              <>
+                <div className="card my-5 mx-5">
+                  <div className="card-overlay"></div>
+                  <h2 key={month} className="font-bold">
+                    {month}'s total :{data.total}
+                  </h2>
+                  {/* Map over the submittedData array and display each object */}
+                  <table>
+                    {submittedData.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.amount}</td>
+                        <td>{item.category}</td>
+                        <td>
+                          {DateTime.fromISO(item.date).toFormat("dd LLL yy")}
+                        </td>
+                        <span>
+                          <button onClick={() => handleEdit(index)}>
+                            Edit
+                          </button>
 
-    ))}
-            
+                          <button onClick={() => handleDelete(index)}>
+                            Delete
+                          </button>
+                        </span>
+                      </tr>
+                    ))}
+                  </table>
+                </div>
+              </>
+            ))}
           </div>
         )}
       </div>
