@@ -1,10 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import dashboardIcon from "../assets/business-report.png";
 import expensesIcon from "../assets/expenses.png";
+import shutdown from "../assets/shutdown.png";
 import incomeIcon from "../assets/income.png";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    //setIsLoggedin(false);
+    navigate('/');
+  };
   return (
     <div className="card ">
       <div className="card-overlay"></div>
@@ -26,6 +34,12 @@ const Navbar = () => {
             <img src={expensesIcon} alt="Expenses Icon" />
             Expenses
           </Link>
+        </li>
+        <li>
+          <button onClick={handleLogout}>
+            <img src={shutdown} alt="Expenses Icon" />
+            Logout
+          </button>
         </li>
       </ul>
     </div>
