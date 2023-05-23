@@ -5,14 +5,14 @@ import expensesIcon from "../assets/expenses.png";
 import shutdown from "../assets/shutdown.png";
 import incomeIcon from "../assets/income.png";
 
-const Navbar = ({setIsLoggedin}) => {
+const Navbar = ({setIsLoggedin,handleLogout}) => {
     const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.clear();
-    setIsLoggedin(false);
-    navigate('/');
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   setIsLoggedin(false);
+  //   navigate('/');
+  // };
   return (
     <div className="card ">
       <div className="card-overlay"></div>
