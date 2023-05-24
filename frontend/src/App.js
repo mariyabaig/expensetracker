@@ -51,10 +51,11 @@ function App() {
   
     <BrowserRouter>
      
-      <Navbar isLoggedin={isLoggedin} handleLogout={handleLogout} />
-      {isLoggedin ? ( <h1 className="text-light-gray text-2xl"> Hey, {userName}! </h1>) : null}
+     {isLoggedin && <Navbar isLoggedin={isLoggedin} handleLogout={handleLogout} />}
+      {isLoggedin && <h1 className="text-light-gray text-2xl"> Hey, {userName}! </h1>}
      
       <Routes>
+        
         <Route
           exact
           path="/dashboard"
