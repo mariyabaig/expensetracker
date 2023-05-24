@@ -5,7 +5,7 @@ import {
   calculateTotal,
   todaysData,
   handleMonthClick,
-  groupByCategory
+  groupByCategory,
 } from "../util";
 import "chart.js/auto";
 import { Pie } from "react-chartjs-2";
@@ -92,6 +92,7 @@ const Expenses = () => {
   const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
 
   const groupExpensesByCategory = groupByCategory(submittedData, "expense");
+  
 
   return (
     <>
@@ -164,116 +165,119 @@ const Expenses = () => {
             </div>
             )} */}
             <div className="flex">
-                <div className="flex flex-row ">
-                  {todaysExpense && todaysExpense.total && (
-                    <div className="card my-3 text-center">
-                      <div className="card-overlay"></div>
-                      <h3 className="text-md text-center font-bold">
-                        {DateTime.local().toFormat("dd LLL yyyy")}'s Expenses
-                      </h3>
-                      <p>Total: ${todaysExpense.total}</p>
-                      <table>
-                      
-                        <thead>
-                          <tr className="">
-                            <th>Category</th>
-                            <th>Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {todaysExpense.data.map((expense, index) => (
-                            <tr key={index}>
-                              <td>{expense.category}</td>
-                              <td>${expense.amount}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <Pie
-                        data={{
-                          labels: todaysExpense.data.map(
-                            (expense) => expense.category
-                          ),
-                          datasets: [
-                            {
-                              data: Object.values(
-                                todaysExpense.data.reduce((acc, expense) => {
-                                  if (!acc[expense.category]) {
-                                    acc[expense.category] = 0;
-                                  }
-                                  acc[expense.category] += parseInt(
-                                    expense.amount
-                                  );
-                                  return acc;
-                                }, {})
-                              ),
-                            },
-                          ],
-                        }}
-                      />
-                    </div>
-                  )}
-
-                  {(!todaysExpense || !todaysExpense.total) && (
-                    <div>
-                      <h3>Today's expense</h3>
-                      <p>No data for today</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            {Object.entries(groupedData).map(([month, data]) => (
-              <>
-                <div className="card my-5 mx-5">
-                  <div className="card-overlay"></div>
-                  <h2
-                    key={month}
-                    className="font-bold"
-                    onClick={() => handleMonthClick(month,selectedMonth,setSelectedMonth)}
-                  >
-                    {month}'s total :{data.total}
-                  </h2>
-                  {/* Map over the submittedData array and display each object */}
-                  {selectedMonth === month && (
-                    <>
-                    {/* <Pie
-                        data={{
-                          labels: Object.keys(groupExpensesByCategory[selectedMonth]),
-                          datasets: [
-                            {
-                              data: Object.values(
-                                groupExpensesByCategory[selectedMonth]
-                              ),
-                            },
-                          ],
-                        }}
-                      /> */}
-                   
+              <div className="flex flex-row ">
+                {todaysExpense && todaysExpense.total && (
+                  <div className="card my-3 text-center">
+                    <div className="card-overlay"></div>
+                    <h3 className="text-md text-center font-bold">
+                      {DateTime.local().toFormat("dd LLL yyyy")}'s Expenses
+                    </h3>
+                    <p>Total: ${todaysExpense.total}</p>
                     <table>
-                      {data.data.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.amount}</td>
-                          <td>{item.category}</td>
-                          <td>
-                            {DateTime.fromISO(item.date).toFormat("dd LLL yy")}
-                          </td>
-                          <span>
-                            <button onClick={() => handleEdit(index)}>
-                              Edit
-                            </button>
-
-                            <button onClick={() => handleDelete(index)}>
-                              Delete
-                            </button>
-                          </span>
+                      <thead>
+                        <tr className="">
+                          <th>Category</th>
+                          <th>Amount</th>
                         </tr>
-                      ))}
+                      </thead>
+                      <tbody>
+                        {todaysExpense.data.map((expense, index) => (
+                          <tr key={index}>
+                            <td>{expense.category}</td>
+                            <td>${expense.amount}</td>
+                          </tr>
+                        ))}
+                      </tbody>
                     </table>
-                    </>
-                  )}
-                </div>
-              </>
+                    <Pie
+                      data={{
+                        labels: todaysExpense.data.map(
+                          (expense) => expense.category
+                        ),
+                        datasets: [
+                          {
+                            data: Object.values(
+                              todaysExpense.data.reduce((acc, expense) => {
+                                if (!acc[expense.category]) {
+                                  acc[expense.category] = 0;
+                                }
+                                acc[expense.category] += parseInt(
+                                  expense.amount
+                                );
+                                return acc;
+                              }, {})
+                            ),
+                          },
+                        ],
+                      }}
+                    />
+                  </div>
+                )}
+
+                {(!todaysExpense || !todaysExpense.total) && (
+                  <div>
+                    <h3>Today's expense</h3>
+                    <p>No data for today</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            
+
+            <div>
+            <label className="flex flex-row items-center text-left px-3 py-2">
+              Category
+              <select
+                value={selectedMonth}
+                onChange={(event) => setSelectedMonth(event.target.value)}
+                onClick={console.log(selectedMonth)}
+                required
+                
+              >
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+            </label>
+  {Object.entries(groupedData).map(([month, data]) => (
+    <div key={month} className="card">
+      <div className="card-overlay"></div>
+      
+      {selectedMonth === month && data.data.length>0 ? (
+        
+        <table>
+          <tbody>
+            {data.data.map((item, index) => (
+              <tr key={index}>
+                <td>{item.amount}</td>
+                <td>{item.category}</td>
+                <td>{DateTime.fromISO(item.date).toFormat("dd LLL yy")}</td>
+                <td>
+                  <button onClick={() => handleEdit(index)}>Edit</button>
+                  <button onClick={() => handleDelete(index)}>Delete</button>
+                </td>
+              </tr>
             ))}
+          </tbody>
+        </table>
+        
+      ): null}
+   
+    </div>
+  ))}
+</div>
+
+            
           </div>
         ) : (
           <span>No data submitted yet</span>
