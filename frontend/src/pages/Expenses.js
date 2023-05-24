@@ -92,7 +92,6 @@ const Expenses = () => {
   const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
 
   const groupExpensesByCategory = groupByCategory(submittedData, "expense");
-  
 
   return (
     <>
@@ -150,24 +149,12 @@ const Expenses = () => {
         {/* Display submitted data if there is any */}
         {submittedData.length > 0 ? (
           <div className=" my-5 mx-5">
-            {/* This block of code is conditional rendering
-            It only renders if submittedData is not null (meaning data has been submitted)
-            It displays the submitted data in a card format
-           The submitted data is accessed from the submittedData state variable
-           Each piece of data (amount, date, category) is displayed in a separate <p> element */}
-            {/* {submittedData && (
-            <div className="card">
-            <div className="card-overlay"></div>
-            <h2>Submitted Data</h2>
-            <p>Amount: {submittedData.amount}</p>
-            <p>Date: {submittedData.date}</p>
-            <p>Category: {submittedData.category}</p>
-            </div>
-            )} */}
+
             <div className="flex">
               <div className="flex flex-row ">
+                
                 {todaysExpense && todaysExpense.total && (
-                  <div className="card my-3 text-center">
+                  <div className="card today my-3 text-center">
                     <div className="card-overlay"></div>
                     <h3 className="text-md text-center font-bold">
                       {DateTime.local().toFormat("dd LLL yyyy")}'s Expenses
@@ -221,63 +208,68 @@ const Expenses = () => {
                   </div>
                 )}
               </div>
+              <div className="months mx-5">
+
+              <label className="flex flex-row items-center">
+                
+                <select
+                  value={selectedMonth}
+                  onChange={(event) => setSelectedMonth(event.target.value)}
+                  onClick={console.log(selectedMonth)}
+                  required
+                >
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+              </label>
+              {Object.entries(groupedData).map(([month, data]) => (
+                <div key={month}  >
+                 
+
+                  {selectedMonth === month && (
+                    <div className="card">
+                       <div className="card-overlay"></div>
+                    <table>
+                      <tbody>
+                        {data.data.map((item, index) => (
+                          <tr key={index}>
+                            <td className="px-3">${item.amount}</td>
+                            <td className="px-3">{item.category}</td>
+                            <td className="px-3">
+                              {DateTime.fromISO(item.date).toFormat(
+                                "dd LLL yy"
+                              )}
+                            </td>
+                            <td className="flex m-2">
+                              <button className="bg-blue-500 px-2 py-2 rounded mx-2" onClick={() => handleEdit(index)}>
+                                Edit
+                              </button>
+                              <button className="bg-blue-500 px-2 py-2 rounded mx-2" onClick={() => handleDelete(index)}>
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    </div>
+                  ) }
+                </div>
+              ))}
+            </div>
             </div>
 
-            
-
-            <div>
-            <label className="flex flex-row items-center text-left px-3 py-2">
-              Category
-              <select
-                value={selectedMonth}
-                onChange={(event) => setSelectedMonth(event.target.value)}
-                onClick={console.log(selectedMonth)}
-                required
-                
-              >
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-              </select>
-            </label>
-  {Object.entries(groupedData).map(([month, data]) => (
-    <div key={month} className="card">
-      <div className="card-overlay"></div>
-      
-      {selectedMonth === month && data.data.length>0 ? (
-        
-        <table>
-          <tbody>
-            {data.data.map((item, index) => (
-              <tr key={index}>
-                <td>{item.amount}</td>
-                <td>{item.category}</td>
-                <td>{DateTime.fromISO(item.date).toFormat("dd LLL yy")}</td>
-                <td>
-                  <button onClick={() => handleEdit(index)}>Edit</button>
-                  <button onClick={() => handleDelete(index)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        
-      ): null}
-   
-    </div>
-  ))}
-</div>
-
-            
+          
           </div>
         ) : (
           <span>No data submitted yet</span>
