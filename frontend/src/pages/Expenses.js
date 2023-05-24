@@ -280,10 +280,10 @@ const Expenses = () => {
               </div>
             </div>
 
-            <div className="bg-red-100">
-              calender dispaly
-              <label className="flex flex-row items-center text-left px-3 py-2">
-                Date
+            <div className="card">
+             
+              <label className="flex flex-row items-center text-center">
+                
                 <input
                   type="date"
                   value={selectedDate}
@@ -293,44 +293,7 @@ const Expenses = () => {
                 />
               </label>
               
-              {/* {Object.entries(submittedData).map(([date, data]) => (
-                <div>
-                  {submittedData.date === selectedDate && (
-                    <div className="card">
-                      <div className="card-overlay"></div>
-                      <table>
-                        <tbody>
-                          {data.data.map((item, index) => (
-                            <tr key={index}>
-                              <td className="px-3">${item.amount}</td>
-                              <td className="px-3">{item.category}</td>
-                              <td className="px-3">
-                                {DateTime.fromISO(item.date).toFormat(
-                                  "dd LLL yy"
-                                )}
-                              </td>
-                              <td className="flex m-2">
-                                <button
-                                  className="bg-blue-500 px-2 py-2 rounded mx-2"
-                                  onClick={() => handleEdit(index)}
-                                >
-                                  Edit
-                                </button>
-                                <button
-                                  className="bg-blue-500 px-2 py-2 rounded mx-2"
-                                  onClick={() => handleDelete(index)}
-                                >
-                                  Delete
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </div>
-              ))} */}
+             
               {/* Conditionally display details */}
   {submittedData.filter((item) => item.date === selectedDate).length > 0 ? (
     <div>
@@ -338,11 +301,14 @@ const Expenses = () => {
       {submittedData
         .filter((item) => item.date === selectedDate)
         .map((item, index) => (
-          <div key={index}>
-            <p>Amount: {item.amount}</p>
-            <p>Category: {item.category}</p>
-            <p>Date: {item.date}</p>
+          <div >
+            <table key={index} className="table">
+            <td >{item.amount}</td>
+            <td > {item.category}</td>
+            <td >{item.date}</td>
+           
             {/* Add additional details here */}
+            </table>
           </div>
         ))}
     </div>
