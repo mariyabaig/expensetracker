@@ -14,30 +14,30 @@ const Navbar = ({setIsLoggedin,handleLogout}) => {
   //   navigate('/');
   // };
   return (
-    <div className="card ">
-      <div className="card-overlay"></div>
-      <ul className="flex flex-row justify-between ">
+    <div>
+     
+      <ul className="flex flex-row justify-evenly text-light-gray text-md my-5">
         <li>
           <Link to="/">
-            <img src={dashboardIcon} alt="Dashboard Icon" />
+            {/* <img src={dashboardIcon} alt="Dashboard Icon" /> */}
             Dashboard
           </Link>
         </li>
         <li>
           <Link to="/income">
-            <img src={incomeIcon} alt="Income Icon" />
+            {/* <img src={incomeIcon} alt="Income Icon" /> */}
             Income
           </Link>
         </li>
         <li>
           <Link to="/expenses">
-            <img src={expensesIcon} alt="Expenses Icon" />
+            {/* <img src={expensesIcon} alt="Expenses Icon" /> */}
             Expenses
           </Link>
         </li>
         <li>
           <button onClick={handleLogout}>
-            <img src={shutdown} alt="Expenses Icon" />
+            {/* <img src={shutdown} alt="Expenses Icon" /> */}
             Logout
           </button>
         </li>

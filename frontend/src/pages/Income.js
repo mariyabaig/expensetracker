@@ -159,12 +159,7 @@ const groupIncomeByCategory = groupByCategory(submittedData)
     </h3>
     <p>Total: ${todaysIncome.total}</p>
     <table>
-      <thead>
-        <tr className="">
-          <th>Category</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
+    
       <tbody>
         {todaysIncome.data && todaysIncome.data.map((income, index) => (
           <tr key={index}>
