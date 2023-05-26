@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "react-google-login";
 
 const Login = ({setIsLoggedin}) => {
   const navigate = useNavigate();
@@ -42,7 +43,32 @@ const Login = ({setIsLoggedin}) => {
     //   alert.show("Invalid credentials, try again");
     }
   };
+  const handleGoogleLogin = async (response) => {
+    const tokenId = response.tokenId;
+    const res = await fetch("http://localhost:8000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: response.profileObj.email,
+        isGoogleLogin: true,
+        tokenId: tokenId,
+      }),
+    });
+    const json = await res.json();
+    console.log(json);
+    if (json.success) {
+      // Save the auth token and redirect
+      localStorage.setItem("authtoken", json.authtoken);
+      setIsLoggedin(true);
+      navigate("/dashboard");
+    } else {
+      // Handle error
+    }
+  };
 
+  const clientId = "407382736203-6eo5jv128nqcprqimck6mh1hf1r1a9.apps.googleusercontent.com"
 
 
 
@@ -116,6 +142,15 @@ const Login = ({setIsLoggedin}) => {
                     Sing In
                   </button>
                 </div>
+                <div className="flex items-center justify-center mt-4">
+        <GoogleLogin
+          clientId={clientId}
+          buttonText="Login with Google"
+          onSuccess={handleGoogleLogin}
+          onFailure={handleGoogleLogin}
+          cookiePolicy={"single_host_origin"}
+        />
+      </div>
                 <span className="flex justify-center mt-2">
                   Don't have an account?
                 </span>
