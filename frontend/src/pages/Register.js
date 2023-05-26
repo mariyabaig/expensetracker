@@ -54,12 +54,8 @@ const Register = ({setIsLoggedin}) => {
   return (
     <>
       <div
-        className="flex justify-center items-center"
-        style={{
-          padding: "5px",
-          display: "flex",
-          justifyContent: "center",
-        }}
+        className="flex justify-center items-center p-16"
+       
       ></div>
       <div className="bg-gray-100 rounded-b-lg">
         <div className="card p-8 lg:w-1/2 mx-auto">

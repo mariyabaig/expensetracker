@@ -5,7 +5,7 @@ import {
   calculateTotal,
   todaysData,
   handleMonthClick,
-  groupByCategory
+  groupByCategory,
 } from "../util";
 import "chart.js/auto";
 import { Pie } from "react-chartjs-2";
@@ -93,9 +93,9 @@ const Income = () => {
   const groupedData = groupByMonth(submittedData);
 
   const todaysIncome = todaysData(submittedData)[DateTime.local().toISODate()];
-console.log(todaysIncome)
+  console.log(todaysIncome);
 
-const groupIncomeByCategory = groupByCategory(submittedData)
+  const groupIncomeByCategory = groupByCategory(submittedData);
 
   return (
     <>
@@ -151,25 +151,25 @@ const groupIncomeByCategory = groupByCategory(submittedData)
             <>
               <div className="flex">
                 <div className="flex flex-row ">
-                {todaysIncome && todaysIncome.total !== 0 ? (
-  <div className="card my-3 text-center">
-    <div className="card-overlay"></div>
-    <h3 className="text-md text-center font-bold">
-      {DateTime.local().toFormat("dd LLL yyyy")}'s Incomes
-    </h3>
-    <p>Total: ${todaysIncome.total}</p>
-    <table>
-    
-      <tbody>
-        {todaysIncome.data && todaysIncome.data.map((income, index) => (
-          <tr key={index}>
-            <td>{income.category}</td>
-            <td>${income.amount}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <Pie
+                  {todaysIncome && todaysIncome.total !== 0 ? (
+                    <div className="card my-3 text-center">
+                      <div className="card-overlay"></div>
+                      <h3 className="text-md text-center font-bold">
+                        {DateTime.local().toFormat("dd LLL yyyy")}'s Incomes
+                      </h3>
+                      <p>Total: ${todaysIncome.total}</p>
+                      <table>
+                        <tbody>
+                          {todaysIncome.data &&
+                            todaysIncome.data.map((income, index) => (
+                              <tr key={index}>
+                                <td>{income.category}</td>
+                                <td>${income.amount}</td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                      <Pie
                         data={{
                           labels: todaysIncome.data.map(
                             (expense) => expense.category
@@ -191,20 +191,24 @@ const groupIncomeByCategory = groupByCategory(submittedData)
                           ],
                         }}
                       />
-  </div>
-) : (
-  <div>
-    <h3>Today's Income</h3>
-    <p>No data for today</p>
-  </div>
-)}
-
+                    </div>
+                  ) : (
+                    <div>
+                      <h3>Today's Income</h3>
+                      <p>No data for today</p>
+                    </div>
+                  )}
                 </div>
               </div>
               {Object.entries(groupedData).map(([month, data]) => (
                 <div className="card" key={month}>
                   <div className="card-overlay"></div>
-                  <h2 onClick={() => handleMonthClick(month, selectedMonth, setSelectedMonth)} className="font-bold">
+                  <h2
+                    onClick={() =>
+                      handleMonthClick(month, selectedMonth, setSelectedMonth)
+                    }
+                    className="font-bold"
+                  >
                     {month}'s total: {data.total}
                   </h2>
 
@@ -216,11 +220,17 @@ const groupIncomeByCategory = groupByCategory(submittedData)
                             <td>{item.amount}</td>
                             <td>{item.category}</td>
                             <td>
-                              {DateTime.fromISO(item.date).toFormat("dd LLL yy")}
+                              {DateTime.fromISO(item.date).toFormat(
+                                "dd LLL yy"
+                              )}
                             </td>
                             <td>
-                              <button onClick={() => handleEdit(index)}>Edit</button>
-                              <button onClick={() => handleDelete(index)}>Delete</button>
+                              <button onClick={() => handleEdit(index)}>
+                                Edit
+                              </button>
+                              <button onClick={() => handleDelete(index)}>
+                                Delete
+                              </button>
                             </td>
                           </tr>
                         ))}

@@ -50,12 +50,8 @@ const Login = ({setIsLoggedin}) => {
     <>
       
         <div
-          className="  flex justify-center items-center"
-          style={{
-            padding: "5px",
-            display: "flex",
-            justifyContent: "center",
-          }}
+          className="flex justify-center items-center p-16"
+         
         >
          
         </div>
