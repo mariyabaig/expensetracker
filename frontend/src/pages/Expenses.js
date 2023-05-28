@@ -20,7 +20,9 @@ const Expenses = () => {
 
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState(DateTime.now().toFormat("LLL"));
+  const [selectedMonth, setSelectedMonth] = useState(
+    DateTime.now().toFormat("LLL")
+  );
   const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
 
   useEffect(() => {
@@ -100,7 +102,7 @@ const Expenses = () => {
 
   const groupedData = groupByMonth(submittedData);
 
- // const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
+  // const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
 
   const groupExpensesByCategory = groupByCategory(submittedData, "expense");
 
@@ -200,7 +202,7 @@ const Expenses = () => {
         {submittedData.length > 0 ? (
           <>
             <div className="date flex flex-col items-center">
-              <label >
+              <label>
                 <input
                   type="date"
                   value={selectedDate}
@@ -209,7 +211,13 @@ const Expenses = () => {
                   required
                 />
               </label>
-{selectedDate === DateTime.now().toISODate() ? (<h1>Today's Expenses</h1>) : (<h1>{selectedDate}'s Expenses</h1>)}
+              {selectedDate === DateTime.now().toISODate() ? (
+                <h1>Today's Expenses</h1>
+              ) : (
+                <h1> {DateTime.fromISO(selectedDate).toFormat(
+                  "dd LLL yy"
+                )}'s Expenses</h1>
+              )}
               {submittedData.filter((item) => item.date === selectedDate)
                 .length > 0 ? (
                 <div className="max-h-[400px] overflow-y-scroll w-full">
