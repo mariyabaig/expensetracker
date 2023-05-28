@@ -100,7 +100,7 @@ const Expenses = () => {
 
   const groupedData = groupByMonth(submittedData);
 
-  const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
+ // const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
 
   const groupExpensesByCategory = groupByCategory(submittedData, "expense");
 
@@ -199,8 +199,8 @@ const Expenses = () => {
       <div className="h-screen">
         {submittedData.length > 0 ? (
           <>
-            <div className="date">
-              <label className="items-center">
+            <div className="date flex flex-col items-center">
+              <label >
                 <input
                   type="date"
                   value={selectedDate}
@@ -209,8 +209,7 @@ const Expenses = () => {
                   required
                 />
               </label>
-
-              {/* Conditionally display details */}
+{selectedDate === DateTime.now().toISODate() ? (<h1>Today's Expenses</h1>) : (<h1>{selectedDate}'s Expenses</h1>)}
               {submittedData.filter((item) => item.date === selectedDate)
                 .length > 0 ? (
                 <div className="max-h-[400px] overflow-y-scroll w-full">
