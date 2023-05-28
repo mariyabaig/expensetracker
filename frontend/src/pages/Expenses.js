@@ -106,7 +106,7 @@ const Expenses = () => {
 
   return (
     <>
-      <div className="min-h-screen py-6 sm:py-12 x">
+      <div className=" py-6 sm:py-12 x">
         <form onSubmit={handleSubmit}>
           <div className="relative py-3 sm:max-w-xl sm:mx-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div>
