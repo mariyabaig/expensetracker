@@ -199,98 +199,96 @@ const Expenses = () => {
       <div className="h-screen">
         {submittedData.length > 0 ? (
           <>
-          <div className="date">
-                <label className="items-center">
-                  <input
-                    type="date"
-                    value={selectedDate}
-                    onChange={(event) => setSelectedDate(event.target.value)}
-                    onClick={console.log(selectedDate)}
-                    required
-                  />
-                </label>
+            <div className="date">
+              <label className="items-center">
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(event) => setSelectedDate(event.target.value)}
+                  onClick={console.log(selectedDate)}
+                  required
+                />
+              </label>
 
-                {/* Conditionally display details */}
-                {submittedData.filter((item) => item.date === selectedDate)
-                  .length > 0 ? (
-                  <div className="max-h-[400px] overflow-y-scroll w-full">
-                    <table className="table-auto w-full" id="table-to-xls">
-                      <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                        <tr>
-                          <th className="p-2 whitespace-nowrap">
-                            <div className="font-semibold text-center">
-                              Amount
-                            </div>
-                          </th>
-                          <th className="p-2 whitespace-nowrap">
-                            <div className="font-semibold text-center">
-                              Category
-                            </div>
-                          </th>
-                          <th className="p-2 whitespace-nowrap">
-                            <div className="font-semibold text-center">
-                              Date
-                            </div>
-                          </th>
-                          <th className="p-2 whitespace-nowrap">
-                            <div className="font-semibold text-center">
-                              Actions
-                            </div>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-sm divide-y divide-gray-100">
-                        {/* Display details for selected date */}
-                        {submittedData
-                          .filter((item) => item.date === selectedDate)
-                          .map((expense, index) => (
-                            <tr key={index}>
-                              <td className="p-2 whitespace-nowrap">
-                                <div className="text-center">
-                                  {expense.amount}
-                                  <div className="font-medium text-gray-800"></div>
-                                </div>
-                              </td>
-                              <td className="p-2 whitespace-nowrap">
-                                <div className="text-center ">
-                                  {expense.category}
-                                </div>
-                              </td>
-                              <td className="p-2 whitespace-nowrap">
-                                <div className="text-center ">
-                                  {DateTime.fromISO(expense.date).toFormat(
-                                    "dd mm yyyy"
-                                  )}
-                                </div>
-                              </td>
-                              <td className="p-2 whitespace-nowrap">
-                                <div className="text-center">
-                                  <button
-                                    className="mx-2"
-                                    onClick={() => handleEdit(index)}
-                                  >
-                                    Edit
-                                  </button>
-                                  <button
-                                    className="mx-2"
-                                    onClick={() => handleDelete(index)}
-                                  >
-                                    Delete
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p className="h-60 flex justify-center items-center">
-                    No details found for selected date.
-                  </p>
-                )}
-              </div>
-          {/* <div className="todays-data">
+              {/* Conditionally display details */}
+              {submittedData.filter((item) => item.date === selectedDate)
+                .length > 0 ? (
+                <div className="max-h-[400px] overflow-y-scroll w-full">
+                  <table className="table-auto w-full" id="table-to-xls">
+                    <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                      <tr>
+                        <th className="p-2 whitespace-nowrap">
+                          <div className="font-semibold text-center">
+                            Amount
+                          </div>
+                        </th>
+                        <th className="p-2 whitespace-nowrap">
+                          <div className="font-semibold text-center">
+                            Category
+                          </div>
+                        </th>
+                        <th className="p-2 whitespace-nowrap">
+                          <div className="font-semibold text-center">Date</div>
+                        </th>
+                        <th className="p-2 whitespace-nowrap">
+                          <div className="font-semibold text-center">
+                            Actions
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-sm divide-y divide-gray-100">
+                      {/* Display details for selected date */}
+                      {submittedData
+                        .filter((item) => item.date === selectedDate)
+                        .map((expense, index) => (
+                          <tr key={index}>
+                            <td className="p-2 whitespace-nowrap">
+                              <div className="text-center">
+                                {expense.amount}
+                                <div className="font-medium text-gray-800"></div>
+                              </div>
+                            </td>
+                            <td className="p-2 whitespace-nowrap">
+                              <div className="text-center ">
+                                {expense.category}
+                              </div>
+                            </td>
+                            <td className="p-2 whitespace-nowrap">
+                              <div className="text-center ">
+                                {DateTime.fromISO(expense.date).toFormat(
+                                  "dd LLL yyyy"
+                                )}
+                              </div>
+                            </td>
+                            <td className="p-2 whitespace-nowrap">
+                              <div className="text-center">
+                                <button
+                                  className="mx-2"
+                                  onClick={() => handleEdit(index)}
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  className="mx-2"
+                                  onClick={() => handleDelete(index)}
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="h-60 flex justify-center items-center">
+                  No details found for selected date.
+                </p>
+              )}
+            </div>
+            {/* <div className="todays-data">
             {todaysExpense && todaysExpense.total && (
               <table className="table-auto w-full" id="table-to-xls">
                 <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
@@ -418,7 +416,7 @@ const Expenses = () => {
                               <td className="p-2 whitespace-nowrap">
                                 <div className="text-center ">
                                   {DateTime.fromISO(expense.date).toFormat(
-                                    "dd mm yyyy"
+                                    "dd LLL yyyy"
                                   )}
                                 </div>
                               </td>
@@ -445,11 +443,8 @@ const Expenses = () => {
                   </table>
                 </div>
               </div>
-
-              
             </>
-            </>
-         
+          </>
         ) : (
           <span>No data submitted yet</span>
         )}
