@@ -209,6 +209,7 @@ const Expenses = () => {
                   onChange={(event) => setSelectedDate(event.target.value)}
                   onClick={console.log(selectedDate)}
                   required
+                  className="input-field"
                 />
               </label>
               {selectedDate === DateTime.now().toISODate() ? (
@@ -354,28 +355,30 @@ const Expenses = () => {
             )}
  </div> */}
             <>
-              <div className="months flex">
-                <label>
-                  <select
-                    value={selectedMonth}
-                    onChange={(event) => setSelectedMonth(event.target.value)}
-                    onClick={console.log(selectedMonth)}
-                    required
-                  >
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                  </select>
-                </label>
+              <div className="months flex flex-col items-center">
+              <label className="items-center">
+  <select
+    value={selectedMonth}
+    onChange={(event) => setSelectedMonth(event.target.value)}
+    onClick={() => console.log(selectedMonth)}
+    required
+    className="select-style"
+  >
+    <option value="January">January</option>
+    <option value="February">February</option>
+    <option value="March">March</option>
+    <option value="April">April</option>
+    <option value="May">May</option>
+    <option value="June">June</option>
+    <option value="July">July</option>
+    <option value="August">August</option>
+    <option value="September">September</option>
+    <option value="October">October</option>
+    <option value="November">November</option>
+    <option value="December">December</option>
+  </select>
+</label>
+
                 <div className="max-h-[400px] overflow-y-scroll w-full">
                   <table className="table-auto w-full" id="table-to-xls">
                     <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">

@@ -182,3 +182,37 @@ ul li {
         border-bottom: 0;
       }
     }
+
+    .select-style {
+      display: block;
+      margin: 0 auto;
+      font-size: 1.2em;
+      padding: 0.5em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #f8f8f8;
+      color: #333;
+      outline: none;
+      width: 200px;
+    }
+
+    .input-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1em;
+    }
+    
+    .input-field {
+      padding: 0.5em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #f8f8f8;
+      color: #333;
+      outline: none;
+      width: 200px;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    
+    
