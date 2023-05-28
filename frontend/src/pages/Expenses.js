@@ -20,7 +20,7 @@ const Expenses = () => {
 
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState();
+  const [selectedMonth, setSelectedMonth] = useState(DateTime.now().toFormat("yyyy-LLL"));
   const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
 
   useEffect(() => {
