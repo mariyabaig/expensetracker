@@ -21,7 +21,7 @@ const Expenses = () => {
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState();
-  const [selectedDate, setSelectedDate] = useState();
+  const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -255,182 +255,202 @@ const Expenses = () => {
                 <p>No data for today</p>
               </div>
             )}
-          
-       
 
-      <>
-        <div className="months flex">
-          <label>
-            <select
-              value={selectedMonth}
-              onChange={(event) => setSelectedMonth(event.target.value)}
-              onClick={console.log(selectedMonth)}
-              required
-            >
-              <option value="January">January</option>
-              <option value="February">February</option>
-              <option value="March">March</option>
-              <option value="April">April</option>
-              <option value="May">May</option>
-              <option value="June">June</option>
-              <option value="July">July</option>
-              <option value="August">August</option>
-              <option value="September">September</option>
-              <option value="October">October</option>
-              <option value="November">November</option>
-              <option value="December">December</option>
-            </select>
-          </label>
-          <div className="max-h-[400px] overflow-y-scroll w-full">
-            <table className="table-auto w-full" id="table-to-xls">
-              <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                <tr>
-                  <th className="p-2 whitespace-nowrap">
-                    <div className="font-semibold text-center">Amount</div>
-                  </th>
-                  <th className="p-2 whitespace-nowrap">
-                    <div className="font-semibold text-center">Category</div>
-                  </th>
-                  <th className="p-2 whitespace-nowrap">
-                    <div className="font-semibold text-center">Date</div>
-                  </th>
-                  <th className="p-2 whitespace-nowrap">
-                    <div className="font-semibold text-center">Actions</div>
-                  </th>
-                </tr>
-              </thead>
-
-              {Object.entries(groupedData).map(([month, data]) => (
-                <tbody className="text-sm divide-y divide-gray-100" key={month}>
-                  {selectedMonth === month &&
-                    data.data.map((expense, index) => (
-                      <tr key={index}>
-                        <td className="p-2 whitespace-nowrap">
-                          <div className="text-center">
-                            {expense.amount}
-                            <div className="font-medium text-gray-800"></div>
+            <>
+              <div className="months flex">
+                <label>
+                  <select
+                    value={selectedMonth}
+                    onChange={(event) => setSelectedMonth(event.target.value)}
+                    onClick={console.log(selectedMonth)}
+                    required
+                  >
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                  </select>
+                </label>
+                <div className="max-h-[400px] overflow-y-scroll w-full">
+                  <table className="table-auto w-full" id="table-to-xls">
+                    <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                      <tr>
+                        <th className="p-2 whitespace-nowrap">
+                          <div className="font-semibold text-center">
+                            Amount
                           </div>
-                        </td>
-                        <td className="p-2 whitespace-nowrap">
-                          <div className="text-center ">{expense.category}</div>
-                        </td>
-                        <td className="p-2 whitespace-nowrap">
-                          <div className="text-center ">
-                            {DateTime.fromISO(expense.date).toFormat(
-                              "dd mm yyyy"
-                            )}
+                        </th>
+                        <th className="p-2 whitespace-nowrap">
+                          <div className="font-semibold text-center">
+                            Category
                           </div>
-                        </td>
-                        <td className="p-2 whitespace-nowrap">
-                          <div className="text-center">
-                            <button
-                              className="mx-2"
-                              onClick={() => handleEdit(index)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="mx-2"
-                              onClick={() => handleDelete(index)}
-                            >
-                              Delete
-                            </button>
+                        </th>
+                        <th className="p-2 whitespace-nowrap">
+                          <div className="font-semibold text-center">Date</div>
+                        </th>
+                        <th className="p-2 whitespace-nowrap">
+                          <div className="font-semibold text-center">
+                            Actions
                           </div>
-                        </td>
+                        </th>
                       </tr>
+                    </thead>
+
+                    {Object.entries(groupedData).map(([month, data]) => (
+                      <tbody
+                        className="text-sm divide-y divide-gray-100"
+                        key={month}
+                      >
+                        {selectedMonth === month &&
+                          data.data.map((expense, index) => (
+                            <tr key={index}>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-center">
+                                  {expense.amount}
+                                  <div className="font-medium text-gray-800"></div>
+                                </div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-center ">
+                                  {expense.category}
+                                </div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-center ">
+                                  {DateTime.fromISO(expense.date).toFormat(
+                                    "dd mm yyyy"
+                                  )}
+                                </div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-center">
+                                  <button
+                                    className="mx-2"
+                                    onClick={() => handleEdit(index)}
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    className="mx-2"
+                                    onClick={() => handleDelete(index)}
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
                     ))}
-                </tbody>
-              ))}
-            </table>
+                  </table>
+                </div>
+              </div>
+
+              <div className="date">
+                <label className="items-center">
+                  <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={(event) => setSelectedDate(event.target.value)}
+                    onClick={console.log(selectedDate)}
+                    required
+                  />
+                </label>
+
+                {/* Conditionally display details */}
+                {submittedData.filter((item) => item.date === selectedDate)
+                  .length > 0 ? (
+                  <div className="max-h-[400px] overflow-y-scroll w-full">
+                    <table className="table-auto w-full" id="table-to-xls">
+                      <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                        <tr>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Amount
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Category
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Date
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Actions
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm divide-y divide-gray-100">
+                        {/* Display details for selected date */}
+                        {submittedData
+                          .filter((item) => item.date === selectedDate)
+                          .map((expense, index) => (
+                            <tr key={index}>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-center">
+                                  {expense.amount}
+                                  <div className="font-medium text-gray-800"></div>
+                                </div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-center ">
+                                  {expense.category}
+                                </div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-center ">
+                                  {DateTime.fromISO(expense.date).toFormat(
+                                    "dd mm yyyy"
+                                  )}
+                                </div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-center">
+                                  <button
+                                    className="mx-2"
+                                    onClick={() => handleEdit(index)}
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    className="mx-2"
+                                    onClick={() => handleDelete(index)}
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="h-60 flex justify-center items-center">
+                    No details found for selected date.
+                  </p>
+                )}
+              </div>
+            </>
           </div>
-        </div>
-
-        <div className="date">
-          <label className="items-center">
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(event) => setSelectedDate(event.target.value)}
-              onClick={console.log(selectedDate)}
-              required
-            />
-          </label>
-
-          {/* Conditionally display details */}
-          {submittedData.filter((item) => item.date === selectedDate).length >
-          0 ? (
-            <div className="max-h-[400px] overflow-y-scroll w-full">
-              <table className="table-auto w-full" id="table-to-xls">
-                <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                  <tr>
-                    <th className="p-2 whitespace-nowrap">
-                      <div className="font-semibold text-center">Amount</div>
-                    </th>
-                    <th className="p-2 whitespace-nowrap">
-                      <div className="font-semibold text-center">Category</div>
-                    </th>
-                    <th className="p-2 whitespace-nowrap">
-                      <div className="font-semibold text-center">Date</div>
-                    </th>
-                    <th className="p-2 whitespace-nowrap">
-                      <div className="font-semibold text-center">Actions</div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm divide-y divide-gray-100">
-                  {/* Display details for selected date */}
-                  {submittedData
-                    .filter((item) => item.date === selectedDate)
-                    .map((expense, index) => (
-                      <tr key={index}>
-                        <td className="p-2 whitespace-nowrap">
-                          <div className="text-center">
-                            {expense.amount}
-                            <div className="font-medium text-gray-800"></div>
-                          </div>
-                        </td>
-                        <td className="p-2 whitespace-nowrap">
-                          <div className="text-center ">{expense.category}</div>
-                        </td>
-                        <td className="p-2 whitespace-nowrap">
-                          <div className="text-center ">
-                            {DateTime.fromISO(expense.date).toFormat(
-                              "dd mm yyyy"
-                            )}
-                          </div>
-                        </td>
-                        <td className="p-2 whitespace-nowrap">
-                          <div className="text-center">
-                            <button
-                              className="mx-2"
-                              onClick={() => handleEdit(index)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="mx-2"
-                              onClick={() => handleDelete(index)}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <p className="h-60 flex justify-center items-center">
-              No details found for selected date.
-            </p>
-          )}
-        </div>
-      </>
-      </div> ) : (
-        <span>No data submitted yet</span>
-      )}
-    </div>
+        ) : (
+          <span>No data submitted yet</span>
+        )}
+      </div>
     </>
   );
 };
