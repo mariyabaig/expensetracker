@@ -9,7 +9,7 @@ import {
   calculateTotalMonth,
 } from "../util";
 import "chart.js/auto";
-import { Pie } from "react-chartjs-2";
+import { Pie, Bar } from "react-chartjs-2";
 
 const Expenses = () => {
   const [expense, setExpense] = useState({
@@ -282,27 +282,81 @@ const Expenses = () => {
                     </tbody>
                   </table>
                   <Pie
-    data={{
-      labels: submittedData
-        .filter((item) => item.date === selectedDate)
-        .map((expense) => expense.category),
-      datasets: [
-        {
-          data: Object.values(
-            submittedData
-              .filter((item) => item.date === selectedDate)
-              .reduce((acc, expense) => {
-                if (!acc[expense.category]) {
-                  acc[expense.category] = 0;
-                }
-                acc[expense.category] += parseInt(expense.amount);
-                return acc;
-              }, {})
-          ),
+                    data={{
+                      labels: submittedData
+                        .filter((item) => item.date === selectedDate)
+                        .map((expense) => expense.category),
+                      datasets: [
+                        {
+                          data: Object.values(
+                            submittedData
+                              .filter((item) => item.date === selectedDate)
+                              .reduce((acc, expense) => {
+                                if (!acc[expense.category]) {
+                                  acc[expense.category] = 0;
+                                }
+                                acc[expense.category] += parseInt(
+                                  expense.amount
+                                );
+                                return acc;
+                              }, {})
+                          ),
+                        },
+                      ],
+                    }}
+                  />
+
+<Bar
+  data={{
+    labels: submittedData
+      .filter((item) => item.date === selectedDate)
+      .map((expense) => expense.category),
+    datasets: [
+      {
+        label: 'Expenses',
+        data: submittedData
+          .filter((item) => item.date === selectedDate)
+          .map((expense) => expense.amount),
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  }}
+  options={{
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        display: true,
+        grid: {
+          display: false,
         },
-      ],
-    }}
-  />
+      },
+      y: {
+        display: false, // Remove the y-axis
+        beginAtZero: true,
+        grid: {
+          display: false,
+        },
+      },
+    },
+    layout: {
+      padding: {
+        left: 10,
+        right: 10,
+        top: 0,
+        bottom: 0,
+      },
+    },
+    responsive: true,
+    barThickness: 28, // Adjust the bar thickness here
+  }}
+/>
+
                 </div>
               ) : (
                 <p className="h-60 flex justify-center items-center">
@@ -426,7 +480,6 @@ const Expenses = () => {
                         {selectedMonth === month &&
                           data.data.map((expense, index) => (
                             <tr key={index}>
-                              
                               <td className="p-2 whitespace-nowrap">
                                 <div className="text-center">
                                   {expense.amount}
