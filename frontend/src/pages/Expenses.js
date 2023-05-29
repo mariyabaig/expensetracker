@@ -109,82 +109,84 @@ const Expenses = () => {
   return (
     <>
       <div className=" py-6 sm:py-12 x">
-      <form onSubmit={handleSubmit}>
-  <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-    <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div>
-    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
-      <div className="max-w-md mx-auto">
-        <div>
-          <h1 className="text-2xl font-semibold">
-            Add your expenses now
-          </h1>
-        </div>
-        <div className="divide-y divide-gray-200">
-          <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-            <div className="relative">
-              <input
-                autoComplete="off"
-                value={expense.amount}
-                id="amount"
-                name="amount"
-                type="number"
-                className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-                placeholder="Expense amount"
-                onChange={(event) =>
-                  setExpense({
-                    ...expense,
-                    amount: event.target.value,
-                  })
-                }
-              />
-            </div>
+        <form onSubmit={handleSubmit}>
+          <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div>
+            <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
+              <div className="max-w-md mx-auto">
+                <div>
+                  <h1 className="text-2xl font-semibold">
+                    Add your expenses now
+                  </h1>
+                </div>
+                <div className="divide-y divide-gray-200">
+                  <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                    <div className="relative">
+                      <input
+                        autoComplete="off"
+                        value={expense.amount}
+                        id="amount"
+                        name="amount"
+                        type="number"
+                        className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                        placeholder="Expense amount"
+                        onChange={(event) =>
+                          setExpense({
+                            ...expense,
+                            amount: event.target.value,
+                          })
+                        }
+                      />
+                    </div>
 
-            <div className="relative">
-              <input
-                autoComplete="off"
-                type="date"
-                value={expense.date}
-                onChange={(event) =>
-                  setExpense({ ...expense, date: event.target.value })
-                }
-                required
-                id="date"
-                name="date"
-                className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-                placeholder="Date"
-              />
-            </div>
+                    <div className="relative">
+                      <input
+                        autoComplete="off"
+                        type="date"
+                        value={expense.date}
+                        onChange={(event) =>
+                          setExpense({ ...expense, date: event.target.value })
+                        }
+                        required
+                        id="date"
+                        name="date"
+                        className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                        placeholder="Date"
+                      />
+                    </div>
 
-            <div className="relative">
-              <select
-                value={expense.category}
-                onChange={(event) =>
-                  setExpense({ ...expense, category: event.target.value })
-                }
-                required
-                className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-              >
-                <option value="">Expense Category</option>
-                <option value="Food">Food</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Housing">Housing</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Utilities">Utilities</option>
-              </select>
-            </div>
+                    <div className="relative">
+                      <select
+                        value={expense.category}
+                        onChange={(event) =>
+                          setExpense({
+                            ...expense,
+                            category: event.target.value,
+                          })
+                        }
+                        required
+                        className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                      >
+                        <option value="">Expense Category</option>
+                        <option value="Food">Food</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Utilities">Utilities</option>
+                      </select>
+                    </div>
 
-            <div className="relative">
-              <button className="bg-dark-blue text-light-gray rounded-md px-2 py-1">
-                Submit
-              </button>
+                    <div className="relative">
+                      <button className="bg-dark-blue text-light-gray rounded-md px-2 py-1">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
-
+        </form>
       </div>
       <div className="h-screen">
         {submittedData.length > 0 ? (
@@ -203,9 +205,11 @@ const Expenses = () => {
               {selectedDate === DateTime.now().toISODate() ? (
                 <h1>Today's Expenses</h1>
               ) : (
-                <h1> {DateTime.fromISO(selectedDate).toFormat(
-                  "dd LLL yy"
-                )}'s Expenses</h1>
+                <h1>
+                  {" "}
+                  {DateTime.fromISO(selectedDate).toFormat("dd LLL yy")}'s
+                  Expenses
+                </h1>
               )}
               {submittedData.filter((item) => item.date === selectedDate)
                 .length > 0 ? (
@@ -277,6 +281,28 @@ const Expenses = () => {
                         ))}
                     </tbody>
                   </table>
+                  <Pie
+    data={{
+      labels: submittedData
+        .filter((item) => item.date === selectedDate)
+        .map((expense) => expense.category),
+      datasets: [
+        {
+          data: Object.values(
+            submittedData
+              .filter((item) => item.date === selectedDate)
+              .reduce((acc, expense) => {
+                if (!acc[expense.category]) {
+                  acc[expense.category] = 0;
+                }
+                acc[expense.category] += parseInt(expense.amount);
+                return acc;
+              }, {})
+          ),
+        },
+      ],
+    }}
+  />
                 </div>
               ) : (
                 <p className="h-60 flex justify-center items-center">
@@ -344,28 +370,28 @@ const Expenses = () => {
  </div> */}
             <>
               <div className="months flex flex-col items-center">
-              <label className="items-center">
-  <select
-    value={selectedMonth}
-    onChange={(event) => setSelectedMonth(event.target.value)}
-    onClick={() => console.log(selectedMonth)}
-    required
-    className="select-style"
-  >
-    <option value="January">January</option>
-    <option value="February">February</option>
-    <option value="March">March</option>
-    <option value="April">April</option>
-    <option value="May">May</option>
-    <option value="June">June</option>
-    <option value="July">July</option>
-    <option value="August">August</option>
-    <option value="September">September</option>
-    <option value="October">October</option>
-    <option value="November">November</option>
-    <option value="December">December</option>
-  </select>
-</label>
+                <label className="items-center">
+                  <select
+                    value={selectedMonth}
+                    onChange={(event) => setSelectedMonth(event.target.value)}
+                    onClick={() => console.log(selectedMonth)}
+                    required
+                    className="select-style"
+                  >
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                  </select>
+                </label>
 
                 <div className="max-h-[400px] overflow-y-scroll w-full">
                   <table className="table-auto w-full" id="table-to-xls">
@@ -400,6 +426,7 @@ const Expenses = () => {
                         {selectedMonth === month &&
                           data.data.map((expense, index) => (
                             <tr key={index}>
+                              
                               <td className="p-2 whitespace-nowrap">
                                 <div className="text-center">
                                   {expense.amount}
