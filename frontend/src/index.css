@@ -5,9 +5,9 @@ body {
   margin: 0;
 
   min-height: 100vh;
-  background: linear-gradient(to bottom, #1e2938 0%, #1e2938 30%, #ddd5d5 20%);
+  /* background: linear-gradient(to bottom, #1e2938 0%, #1e2938 30%, #ddd5d5 20%);
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% 100%; */
 }
 
 
