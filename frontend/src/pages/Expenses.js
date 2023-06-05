@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { DateTime } from "luxon";
 import {
   groupByMonth,
@@ -12,6 +12,7 @@ import "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 const Expenses = () => {
   const [expense, setExpense] = useState({
@@ -59,6 +60,8 @@ const Expenses = () => {
     };
     fetchExpenses();
   }, []);
+
+  const tableRef = useRef(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -452,9 +455,18 @@ const Expenses = () => {
     </label>
 
     <div className="my-5 w-full">
+          <DownloadTableExcel
+                    filename="users table"
+                    sheet="users"
+                    currentTableRef={tableRef.current}
+                >
+
+                   <button> Export excel </button>
+
+                </DownloadTableExcel>
       {Object.entries(groupedData).map(([month, data]) =>
         selectedMonth === month ? (
-          <table className="table-auto w-full" id="table-to-xls" key={month}>
+          <table className="table-auto w-full" id="table-to-xls" key={month} ref={tableRef}>
             <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
               <tr>
                 <th className="p-2 whitespace-nowrap">
