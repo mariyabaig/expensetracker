@@ -10,6 +10,8 @@ import {
 } from "../util";
 import "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const Expenses = () => {
   const [expense, setExpense] = useState({
@@ -108,377 +110,171 @@ const Expenses = () => {
 
   return (
     <>
-      <div className=" py-6 sm:py-12 x">
-        <form onSubmit={handleSubmit}>
-          <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div>
-            <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
-              <div className="max-w-md mx-auto">
-                <div>
-                  <h1 className="text-2xl font-semibold">
-                    Add your expenses now
-                  </h1>
-                </div>
-                <div className="divide-y divide-gray-200">
-                  <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                    <div className="relative">
-                      <input
-                        autoComplete="off"
-                        value={expense.amount}
-                        id="amount"
-                        name="amount"
-                        type="number"
-                        className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-                        placeholder="Expense amount"
-                        onChange={(event) =>
-                          setExpense({
-                            ...expense,
-                            amount: event.target.value,
-                          })
-                        }
-                      />
-                    </div>
 
-                    <div className="relative">
-                      <input
-                        autoComplete="off"
-                        type="date"
-                        value={expense.date}
-                        onChange={(event) =>
-                          setExpense({ ...expense, date: event.target.value })
-                        }
-                        required
-                        id="date"
-                        name="date"
-                        className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-                        placeholder="Date"
-                      />
-                    </div>
+ <div className="flex flex-row">
+<Sidebar/>
+{/* <Navbar/> */}
+      <div className="w-3/4">
+        <div className=" py-6 sm:py-12 x">
+          <form onSubmit={handleSubmit} className=" mx-8">
+            <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+              {/* <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div> */}
+              <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
+                <div className="max-w-md mx-auto">
+                  <div>
+                    <h1 className="text-2xl font-semibold">
+                      Add your expenses now
+                    </h1>
+                  </div>
+                  <div className="divide-y divide-gray-200">
+                    <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                      <div className="relative">
+                        <input
+                          autoComplete="off"
+                          value={expense.amount}
+                          id="amount"
+                          name="amount"
+                          type="number"
+                          className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                          placeholder="Expense amount"
+                          onChange={(event) =>
+                            setExpense({
+                              ...expense,
+                              amount: event.target.value,
+                            })
+                          }
+                        />
+                      </div>
 
-                    <div className="relative">
-                      <select
-                        value={expense.category}
-                        onChange={(event) =>
-                          setExpense({
-                            ...expense,
-                            category: event.target.value,
-                          })
-                        }
-                        required
-                        className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-                      >
-                        <option value="">Expense Category</option>
-                        <option value="Food">Food</option>
-                        <option value="Transportation">Transportation</option>
-                        <option value="Housing">Housing</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Utilities">Utilities</option>
-                      </select>
-                    </div>
+                      <div className="relative">
+                        <input
+                          autoComplete="off"
+                          type="date"
+                          value={expense.date}
+                          onChange={(event) =>
+                            setExpense({ ...expense, date: event.target.value })
+                          }
+                          required
+                          id="date"
+                          name="date"
+                          className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                          placeholder="Date"
+                        />
+                      </div>
 
-                    <div className="relative">
-                      <button className="bg-dark-blue text-light-gray rounded-md px-2 py-1">
-                        Submit
-                      </button>
+                      <div className="relative">
+                        <select
+                          value={expense.category}
+                          onChange={(event) =>
+                            setExpense({
+                              ...expense,
+                              category: event.target.value,
+                            })
+                          }
+                          required
+                          className="h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                        >
+                          <option value="">Expense Category</option>
+                          <option value="Food">Food</option>
+                          <option value="Transportation">Transportation</option>
+                          <option value="Housing">Housing</option>
+                          <option value="Entertainment">Entertainment</option>
+                          <option value="Utilities">Utilities</option>
+                        </select>
+                      </div>
+
+                      <div className="relative">
+                        <button className="bg-dark-blue text-light-gray rounded-md px-2 py-1">
+                          Submit
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
-      </div>
-      <div className="h-screen">
-        {submittedData.length > 0 ? (
-          <>
-            <div className="date flex flex-col items-center">
-              <label>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(event) => setSelectedDate(event.target.value)}
-                  onClick={console.log(selectedDate)}
-                  required
-                  className="input-field"
-                />
-              </label>
-              {selectedDate === DateTime.now().toISODate() ? (
-                <h1>Today's Expenses</h1>
-              ) : (
-                <h1>
-                  {" "}
-                  {DateTime.fromISO(selectedDate).toFormat("dd LLL yy")}'s
-                  Expenses
-                </h1>
-              )}
-              {submittedData.filter((item) => item.date === selectedDate)
-                .length > 0 ? (
-                <div className="max-h-[400px] overflow-y-scroll w-full">
-                  <table className="table-auto w-full" id="table-to-xls">
-                    <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                      <tr>
-                        <th className="p-2 whitespace-nowrap">
-                          <div className="font-semibold text-center">
-                            Amount
-                          </div>
-                        </th>
-                        <th className="p-2 whitespace-nowrap">
-                          <div className="font-semibold text-center">
-                            Category
-                          </div>
-                        </th>
-                        <th className="p-2 whitespace-nowrap">
-                          <div className="font-semibold text-center">Date</div>
-                        </th>
-                        <th className="p-2 whitespace-nowrap">
-                          <div className="font-semibold text-center">
-                            Actions
-                          </div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-sm divide-y divide-gray-100">
-                      {/* Display details for selected date */}
-                      {submittedData
-                        .filter((item) => item.date === selectedDate)
-                        .map((expense, index) => (
-                          <tr key={index}>
-                            <td className="p-2 whitespace-nowrap">
-                              <div className="text-center">
-                                {expense.amount}
-                                <div className="font-medium text-gray-800"></div>
-                              </div>
-                            </td>
-                            <td className="p-2 whitespace-nowrap">
-                              <div className="text-center ">
-                                {expense.category}
-                              </div>
-                            </td>
-                            <td className="p-2 whitespace-nowrap">
-                              <div className="text-center ">
-                                {DateTime.fromISO(expense.date).toFormat(
-                                  "dd LLL yyyy"
-                                )}
-                              </div>
-                            </td>
-                            <td className="p-2 whitespace-nowrap">
-                              <div className="text-center">
-                                <button
-                                  className="mx-2"
-                                  onClick={() => handleEdit(index)}
-                                >
-                                  Edit
-                                </button>
-                                <button
-                                  className="mx-2"
-                                  onClick={() => handleDelete(index)}
-                                >
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                  <Pie
-                    data={{
-                      labels: submittedData
-                        .filter((item) => item.date === selectedDate)
-                        .map((expense) => expense.category),
-                      datasets: [
-                        {
-                          data: Object.values(
-                            submittedData
-                              .filter((item) => item.date === selectedDate)
-                              .reduce((acc, expense) => {
-                                if (!acc[expense.category]) {
-                                  acc[expense.category] = 0;
-                                }
-                                acc[expense.category] += parseInt(
-                                  expense.amount
-                                );
-                                return acc;
-                              }, {})
-                          ),
-                        },
-                      ],
-                    }}
-                  />
-
-<Bar
-  data={{
-    labels: submittedData
-      .filter((item) => item.date === selectedDate)
-      .map((expense) => expense.category),
-    datasets: [
-      {
-        label: 'Expenses',
-        data: submittedData
-          .filter((item) => item.date === selectedDate)
-          .map((expense) => expense.amount),
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-      },
-    ],
-  }}
-  options={{
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      x: {
-        display: true,
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        display: false, // Remove the y-axis
-        beginAtZero: true,
-        grid: {
-          display: false,
-        },
-      },
-    },
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 0,
-        bottom: 0,
-      },
-    },
-    responsive: true,
-    barThickness: 28, // Adjust the bar thickness here
-  }}
-/>
-
-                </div>
-              ) : (
-                <p className="h-60 flex justify-center items-center">
-                  No details found for selected date.
-                </p>
-              )}
-            </div>
-            {/* <div className="todays-data">
-            {todaysExpense && todaysExpense.total && (
-              <table className="table-auto w-full" id="table-to-xls">
-                <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                  <tr>
-                    <th className="p-2 whitespace-nowrap">
-                      <div className="font-semibold text-center"> Amount</div>
-                    </th>
-                    <th className="p-2 whitespace-nowrap">
-                      <div className="font-semibold text-center">Category</div>
-                    </th>
-                    <th className="p-2 whitespace-nowrap">
-                      <div className="font-semibold text-center">Actions</div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm divide-y divide-gray-100">
-                  {todaysExpense.data.map((expense, index) => (
-                    <tr key={index}>
-                      <td className="p-2 whitespace-nowrap">
-                        <div className="text-center">
-                          {expense.amount}
-                          <div className="font-medium text-gray-800"></div>
-                        </div>
-                      </td>
-
-                      <td className="p-2 whitespace-nowrap">
-                        <div className="text-center "> {expense.category}</div>
-                      </td>
-
-                      <td className="p-2 whitespace-nowrap">
-                        <div className="text-center">
-                          <button
-                            className="mx-2"
-                            onClick={() => handleEdit(index)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="mx-2"
-                            onClick={() => handleDelete(index)}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-            {(!todaysExpense || !todaysExpense.total) && (
-              <div>
-                <h3>Today's expense</h3>
-                <p>No data for today</p>
-              </div>
-            )}
- </div> */}
+          </form>
+        </div>
+        <div className="h-screen">
+          {submittedData.length > 0 ? (
             <>
-              <div className="months flex flex-col items-center">
-                <label className="items-center">
-                  <select
-                    value={selectedMonth}
-                    onChange={(event) => setSelectedMonth(event.target.value)}
-                    onClick={() => console.log(selectedMonth)}
+              <div className="date flex flex-col items-center">
+                <label>
+                  <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={(event) => setSelectedDate(event.target.value)}
+                    onClick={console.log(selectedDate)}
                     required
-                    className="select-style"
-                  >
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                  </select>
+                    className="input-field"
+                  />
                 </label>
-
-                <div className="max-h-[400px] overflow-y-scroll w-full">
-                  <table className="table-auto w-full" id="table-to-xls">
-                    <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                      <tr>
-                        <th className="p-2 whitespace-nowrap">
-                          <div className="font-semibold text-center">
-                            Amount
-                          </div>
-                        </th>
-                        <th className="p-2 whitespace-nowrap">
-                          <div className="font-semibold text-center">
-                            Category
-                          </div>
-                        </th>
-                        <th className="p-2 whitespace-nowrap">
-                          <div className="font-semibold text-center">Date</div>
-                        </th>
-                        <th className="p-2 whitespace-nowrap">
-                          <div className="font-semibold text-center">
-                            Actions
-                          </div>
-                        </th>
-                      </tr>
-                    </thead>
-
-                    {Object.entries(groupedData).map(([month, data]) => (
-                      <tbody
-                        className="text-sm divide-y divide-gray-100"
-                        key={month}
-                      >
-                        {selectedMonth === month &&
-                          data.data.map((expense, index) => (
+                {selectedDate === DateTime.now().toISODate() ? (
+                  <h1>Today's Expenses</h1>
+                ) : (
+                  <h1>
+                    {" "}
+                    {DateTime.fromISO(selectedDate).toFormat("dd LLL yy")}'s
+                    Expenses
+                  </h1>
+                )}
+                {submittedData.filter((item) => item.date === selectedDate)
+                  .length > 0 ? (
+                  <div className="max-h-[400px] overflow-y-scroll w-full">
+                    <Pie
+                      data={{
+                        labels: submittedData
+                          .filter((item) => item.date === selectedDate)
+                          .map((expense) => expense.category),
+                        datasets: [
+                          {
+                            data: Object.values(
+                              submittedData
+                                .filter((item) => item.date === selectedDate)
+                                .reduce((acc, expense) => {
+                                  if (!acc[expense.category]) {
+                                    acc[expense.category] = 0;
+                                  }
+                                  acc[expense.category] += parseInt(
+                                    expense.amount
+                                  );
+                                  return acc;
+                                }, {})
+                            ),
+                          },
+                        ],
+                      }}
+                    />
+                    <table className="table-auto w-full" id="table-to-xls">
+                      <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                        <tr>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Amount
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Category
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Date
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Actions
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm divide-y divide-gray-100">
+                        {/* Display details for selected date */}
+                        {submittedData
+                          .filter((item) => item.date === selectedDate)
+                          .map((expense, index) => (
                             <tr key={index}>
                               <td className="p-2 whitespace-nowrap">
                                 <div className="text-center">
@@ -517,16 +313,128 @@ const Expenses = () => {
                             </tr>
                           ))}
                       </tbody>
-                    ))}
-                  </table>
-                </div>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="h-60 flex justify-center items-center">
+                    No details found for selected date.
+                  </p>
+                )}
               </div>
+
+              <>
+                <div className="months flex flex-col items-center">
+                  <label className="items-center">
+                    <select
+                      value={selectedMonth}
+                      onChange={(event) => setSelectedMonth(event.target.value)}
+                      onClick={() => console.log(selectedMonth)}
+                      required
+                      className="select-style"
+                    >
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                      <option value="October">October</option>
+                      <option value="November">November</option>
+                      <option value="December">December</option>
+                    </select>
+                  </label>
+
+                  <div className="max-h-[400px] overflow-y-scroll w-full">
+                    <table className="table-auto w-full" id="table-to-xls">
+                      <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                        <tr>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Amount
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Category
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Date
+                            </div>
+                          </th>
+                          <th className="p-2 whitespace-nowrap">
+                            <div className="font-semibold text-center">
+                              Actions
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      {Object.entries(groupedData).map(([month, data]) => (
+                        <tbody
+                          className="text-sm divide-y divide-gray-100"
+                          key={month}
+                        >
+                          {selectedMonth === month &&
+                            data.data.map((expense, index) => (
+                              <tr key={index}>
+                                <td className="p-2 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {expense.amount}
+                                    <div className="font-medium text-gray-800"></div>
+                                  </div>
+                                </td>
+                                <td className="p-2 whitespace-nowrap">
+                                  <div className="text-center ">
+                                    {expense.category}
+                                  </div>
+                                </td>
+                                <td className="p-2 whitespace-nowrap">
+                                  <div className="text-center ">
+                                    {DateTime.fromISO(expense.date).toFormat(
+                                      "dd LLL yyyy"
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="p-2 whitespace-nowrap">
+                                  <div className="text-center">
+                                    <button
+                                      className="mx-2"
+                                      onClick={() => handleEdit(index)}
+                                    >
+                                      Edit
+                                    </button>
+                                    <button
+                                      className="mx-2"
+                                      onClick={() => handleDelete(index)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      ))}
+                    </table>
+                  </div>
+                </div>
+              </>
             </>
-          </>
-        ) : (
-          <span>No data submitted yet</span>
-        )}
+          ) : (
+            <span>No data submitted yet</span>
+          )}
+        </div>
       </div>
+
+      <div className="w-1/4 bg-dark-blue">
+        <h1 className="text-4xl">Hello</h1>
+      </div>
+     </div>
     </>
   );
 };
