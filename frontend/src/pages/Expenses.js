@@ -27,6 +27,7 @@ const Expenses = () => {
   );
   const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
 
+  
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
@@ -220,8 +221,8 @@ const Expenses = () => {
                 )}
                 {submittedData.filter((item) => item.date === selectedDate)
                   .length > 0 ? (
-                  <div className="max-h-[400px] overflow-y-scroll w-full">
-                    <Pie
+                  <div className="w-full">
+                    {/* <Pie
                       data={{
                         labels: submittedData
                           .filter((item) => item.date === selectedDate)
@@ -244,7 +245,7 @@ const Expenses = () => {
                           },
                         ],
                       }}
-                    />
+                    /> */}
                     <table className="table-auto w-full" id="table-to-xls">
                       <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                         <tr>
@@ -266,7 +267,9 @@ const Expenses = () => {
                           <th className="p-2 whitespace-nowrap">
                             <div className="font-semibold text-center">
                               Actions
+
                             </div>
+                            <button>Show all</button>
                           </th>
                         </tr>
                       </thead>
@@ -322,8 +325,8 @@ const Expenses = () => {
                 )}
               </div>
 
-              <>
-                <div className="months flex flex-col items-center">
+              {/* <>
+                <div className="months flex flex-col items-center my-5">
                   <label className="items-center">
                     <select
                       value={selectedMonth}
@@ -347,7 +350,7 @@ const Expenses = () => {
                     </select>
                   </label>
 
-                  <div className="max-h-[400px] overflow-y-scroll w-full">
+                  <div className="my-5 w-full">
                     <table className="table-auto w-full" id="table-to-xls">
                       <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                         <tr>
@@ -423,7 +426,89 @@ const Expenses = () => {
                     </table>
                   </div>
                 </div>
-              </>
+              </> */}<>
+  <div className="months flex flex-col items-center my-5">
+    <label className="items-center">
+      <select
+        value={selectedMonth}
+        onChange={(event) => setSelectedMonth(event.target.value)}
+        onClick={() => console.log(selectedMonth)}
+        required
+        className="select-style"
+      >
+        <option value="January">January</option>
+        <option value="February">February</option>
+        <option value="March">March</option>
+        <option value="April">April</option>
+        <option value="May">May</option>
+        <option value="June">June</option>
+        <option value="July">July</option>
+        <option value="August">August</option>
+        <option value="September">September</option>
+        <option value="October">October</option>
+        <option value="November">November</option>
+        <option value="December">December</option>
+      </select>
+    </label>
+
+    <div className="my-5 w-full">
+      {Object.entries(groupedData).map(([month, data]) =>
+        selectedMonth === month ? (
+          <table className="table-auto w-full" id="table-to-xls" key={month}>
+            <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+              <tr>
+                <th className="p-2 whitespace-nowrap">
+                  <div className="font-semibold text-center">Amount</div>
+                </th>
+                <th className="p-2 whitespace-nowrap">
+                  <div className="font-semibold text-center">Category</div>
+                </th>
+                <th className="p-2 whitespace-nowrap">
+                  <div className="font-semibold text-center">Date</div>
+                </th>
+                <th className="p-2 whitespace-nowrap">
+                  <div className="font-semibold text-center">Actions</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="text-sm divide-y divide-gray-100">
+              {data.data.map((expense, index) => (
+                <tr key={index}>
+                  <td className="p-2 whitespace-nowrap">
+                    <div className="text-center">
+                      {expense.amount}
+                      <div className="font-medium text-gray-800"></div>
+                    </div>
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    <div className="text-center ">{expense.category}</div>
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    <div className="text-center ">
+                      {DateTime.fromISO(expense.date).toFormat("dd LLL yyyy")}
+                    </div>
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    <div className="text-center">
+                      <button className="mx-2" onClick={() => handleEdit(index)}>
+                        Edit
+                      </button>
+                      <button className="mx-2" onClick={() => handleDelete(index)}>
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : null
+      )}
+    </div>
+  </div>
+</>
+
+
             </>
           ) : (
             <span>No data submitted yet</span>
