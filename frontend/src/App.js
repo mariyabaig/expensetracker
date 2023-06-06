@@ -52,7 +52,7 @@ function App() {
     <BrowserRouter>
      
     {isLoggedin && <Navbar isLoggedin={isLoggedin} handleLogout={handleLogout} />}
-      {isLoggedin && <h1 className="text-light-gray text-2xl"> Hey, {userName}! </h1>}
+     
      
       <Routes>
         
