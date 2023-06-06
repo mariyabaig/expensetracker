@@ -123,8 +123,8 @@ const Expenses = () => {
 <Sidebar/>
 {/* <Navbar/> */}
       <div className="w-3/4">
-        <div className=" py-6 sm:py-12 x">
-          <form onSubmit={handleSubmit} className=" mx-8">
+        <div className=" py-6 sm:py-12 ">
+          <form onSubmit={handleSubmit}>
             <div className="relative py-3 sm:max-w-xl sm:mx-auto">
               {/* <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div> */}
               <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
@@ -332,108 +332,7 @@ const Expenses = () => {
                 )}
               </div>
 
-              {/* <>
-                <div className="months flex flex-col items-center my-5">
-                  <label className="items-center">
-                    <select
-                      value={selectedMonth}
-                      onChange={(event) => setSelectedMonth(event.target.value)}
-                      onClick={() => console.log(selectedMonth)}
-                      required
-                      className="select-style"
-                    >
-                      <option value="January">January</option>
-                      <option value="February">February</option>
-                      <option value="March">March</option>
-                      <option value="April">April</option>
-                      <option value="May">May</option>
-                      <option value="June">June</option>
-                      <option value="July">July</option>
-                      <option value="August">August</option>
-                      <option value="September">September</option>
-                      <option value="October">October</option>
-                      <option value="November">November</option>
-                      <option value="December">December</option>
-                    </select>
-                  </label>
-
-                  <div className="my-5 w-full">
-                    <table className="table-auto w-full" id="table-to-xls">
-                      <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                        <tr>
-                          <th className="p-2 whitespace-nowrap">
-                            <div className="font-semibold text-center">
-                              Amount
-                            </div>
-                          </th>
-                          <th className="p-2 whitespace-nowrap">
-                            <div className="font-semibold text-center">
-                              Category
-                            </div>
-                          </th>
-                          <th className="p-2 whitespace-nowrap">
-                            <div className="font-semibold text-center">
-                              Date
-                            </div>
-                          </th>
-                          <th className="p-2 whitespace-nowrap">
-                            <div className="font-semibold text-center">
-                              Actions
-                            </div>
-                          </th>
-                        </tr>
-                      </thead>
-
-                      {Object.entries(groupedData).map(([month, data]) => (
-                        <tbody
-                          className="text-sm divide-y divide-gray-100"
-                          key={month}
-                        >
-                          {selectedMonth === month &&
-                            data.data.map((expense, index) => (
-                              <tr key={index}>
-                                <td className="p-2 whitespace-nowrap">
-                                  <div className="text-center">
-                                    {expense.amount}
-                                    <div className="font-medium text-gray-800"></div>
-                                  </div>
-                                </td>
-                                <td className="p-2 whitespace-nowrap">
-                                  <div className="text-center ">
-                                    {expense.category}
-                                  </div>
-                                </td>
-                                <td className="p-2 whitespace-nowrap">
-                                  <div className="text-center ">
-                                    {DateTime.fromISO(expense.date).toFormat(
-                                      "dd LLL yyyy"
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="p-2 whitespace-nowrap">
-                                  <div className="text-center">
-                                    <button
-                                      className="mx-2"
-                                      onClick={() => handleEdit(index)}
-                                    >
-                                      Edit
-                                    </button>
-                                    <button
-                                      className="mx-2"
-                                      onClick={() => handleDelete(index)}
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      ))}
-                    </table>
-                  </div>
-                </div>
-              </> */}<>
+              
   <div className="months flex flex-col items-center my-5">
     <label className="items-center">
       <select
@@ -528,7 +427,6 @@ const Expenses = () => {
 </>
 
 
-            </>
           ) : (
             <span>No data submitted yet</span>
           )}
