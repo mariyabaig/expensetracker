@@ -62,7 +62,11 @@ const Expenses = () => {
   }, []);
 
   const tableRef = useRef(null);
+  const [showMore, setShowMore] = useState(false);
 
+  const handleShowMore = () => {
+    setShowMore(true);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = expense;
@@ -484,7 +488,8 @@ const Expenses = () => {
               </tr>
             </thead>
             <tbody className="text-sm divide-y divide-gray-100">
-              {data.data.map((expense, index) => (
+            {data.data.slice(0, showMore ? data.data.length : 4).map((expense, index) => (
+              // {data.data.map((expense, index) => (
                 <tr key={index}>
                   <td className="p-2 whitespace-nowrap">
                     <div className="text-center">
@@ -513,7 +518,9 @@ const Expenses = () => {
                 </tr>
               ))}
             </tbody>
+            <button onClick={()=>{handleShowMore()}}>Show more</button>
           </table>
+         
         ) : null
       )}
     </div>
