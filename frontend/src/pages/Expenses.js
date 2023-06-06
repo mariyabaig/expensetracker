@@ -65,7 +65,7 @@ const Expenses = () => {
   const [showMore, setShowMore] = useState(false);
 
   const handleShowMore = () => {
-    setShowMore(true);
+    setShowMore((prevState) => !prevState);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -417,7 +417,7 @@ const Expenses = () => {
                 </tr>
               ))}
             </tbody>
-            <button onClick={()=>{handleShowMore()}}>Show more</button>
+            <button onClick={()=>{handleShowMore()}}>{showMore ? 'Show less' : 'Show more'}</button>
           </table>
          
         ) : null
