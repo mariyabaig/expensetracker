@@ -9,10 +9,6 @@ import {
   calculateTotalMonth,
 } from "../util";
 import "chart.js/auto";
-import { Pie, Bar } from "react-chartjs-2";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "../components/Modal";
 
 const Expenses = () => {
@@ -27,8 +23,9 @@ const Expenses = () => {
   const [showMore, setShowMore] = useState(false);
 
   const [selectedMonth, setSelectedMonth] = useState(
-    DateTime.now().toFormat("LLL")
+    DateTime.now().toFormat("MMMM") // Change "LLL" to "MMMM"
   );
+  
   const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
 
   useEffect(() => {
