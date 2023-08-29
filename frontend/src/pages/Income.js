@@ -39,7 +39,7 @@ const Income = () => {
         setSubmittedData(data);
       } catch (err) {
         console.error(err);
-        // Handle error
+        
       }
     };
     fetchIncome();
@@ -135,9 +135,9 @@ const Income = () => {
                 }
               >
                 <option value="">Select</option>
-                <option value="Food">Salary</option>
-                <option value="Transportation">Refund</option>
-                <option value="Housing">Others</option>
+                <option value="Salary">Salary</option>
+                <option value="Refund">Refund</option>
+                <option value="Others">Others</option>
               </select>
             </label>
             <button className="bg-blue-300 mt-4" type="submit">
