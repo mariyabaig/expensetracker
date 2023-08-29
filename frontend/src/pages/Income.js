@@ -97,6 +97,8 @@ const Income = () => {
     setSubmittedData(newData);
   };
 
+
+
   const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
   const groupedData = groupByMonth(submittedData);
 
@@ -108,6 +110,7 @@ const Income = () => {
   return (
     <>
       <div className="grid grid-cols-3 grid-rows-1 gap-12 m-6">
+       
         <form onSubmit={handleSubmit} className="float-left">
           <div className="relative py-3 px-2 ">
             {/* <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div>  */}
@@ -270,19 +273,15 @@ const Income = () => {
                     </table>
                     <div className="mt-4 flex flex-row justify-center">
                       <button
-                        className="bg-dark-blue text-light-gray rounded-md text-sm"
-                        onClick={() => {
-                          setSelectedModalData(
-                            submittedData.filter(
-                              (item) => item.date === selectedDate
-                            )
-                          );
-                          setShowDateModal(true);
-                        }}
-                      >
-                        Show More
-                      </button>
-                    </div>
+  className="bg-dark-blue text-light-gray rounded-md text-sm"
+  onClick={() => {
+    setSelectedModalData(submittedData.filter(item => item.date === selectedDate));
+    setShowDateModal(true);
+  }}
+>
+  Show More
+</button>
+                      </div>
                   </div>
                 ) : (
                   <p className="h-60 flex justify-center items-center">
@@ -383,19 +382,15 @@ const Income = () => {
                             ))}
                         </tbody>
                         <div className="mt-4 flex flex-row justify-center">
-                          <button
-                            className="bg-dark-blue text-light-gray rounded-md text-sm"
-                            onClick={() => {
-                              setSelectedModalData(
-                                Object.values(groupedData).flatMap(
-                                  (data) => data.data
-                                )
-                              );
-                              setShowMonthModal(true);
-                            }}
-                          >
-                            Show More
-                          </button>
+                        <button
+    className="bg-dark-blue text-light-gray rounded-md text-sm"
+    onClick={() => {
+      setSelectedModalData(groupedData[selectedMonth].data);
+      setShowMonthModal(true);
+    }}
+  >
+    Show More
+  </button>
                         </div>
 
                         {/* Modal */}
@@ -418,21 +413,23 @@ const Income = () => {
         )}
       </div>
       {showMonthModal && (
-        <Modal
-          isOpen={showMonthModal}
-          onClose={() => setShowMonthModal(false)}
-          data={selectedModalData}
-        />
-      )}
+  <Modal
+    isOpen={showMonthModal}
+    onClose={() => setShowMonthModal(false)}
+    data={selectedModalData}
+  />
+)}
 
-      {showDateModal && (
-        <Modal
-          isOpen={showDateModal}
-          onClose={() => setShowDateModal(false)}
-          data={selectedModalData}
-        />
-      )}
-    </>
+{showDateModal && (
+  <Modal
+    isOpen={showDateModal}
+    onClose={() => setShowDateModal(false)}
+    data={selectedModalData}
+  />
+)}
+
+
+ </>   
   );
 };
 
