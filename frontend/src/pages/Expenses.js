@@ -21,11 +21,14 @@ const Expenses = () => {
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [showMore, setShowMore] = useState(false);
+  const [showMonthModal, setShowMonthModal] = useState(false);
+  const [showDateModal, setShowDateModal] = useState(false);
+  const [selectedModalData, setSelectedModalData] = useState([]); // Data for the active modal
 
   const [selectedMonth, setSelectedMonth] = useState(
     DateTime.now().toFormat("MMMM") // Change "LLL" to "MMMM"
   );
-  
+
   const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
 
   useEffect(() => {
@@ -274,6 +277,17 @@ const Expenses = () => {
                             </tr>
                           ))}
                       </tbody>
+                      <div className="mt-4 flex flex-row justify-center">
+                      <button
+  className="bg-dark-blue text-light-gray rounded-md text-sm"
+  onClick={() => {
+    setSelectedModalData(submittedData.filter(item => item.date === selectedDate));
+    setShowDateModal(true);
+  }}
+>
+  Show More
+</button>
+                      </div>
                     </table>
                   </div>
                 ) : (
@@ -377,7 +391,14 @@ const Expenses = () => {
                         <div className="mt-4 flex flex-row justify-center">
                           <button
                             className="bg-dark-blue text-light-gray rounded-md text-sm"
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={() => {
+                              setSelectedModalData(
+                                Object.values(groupedData).flatMap(
+                                  (data) => data.data
+                                )
+                              );
+                              setShowMonthModal(true);
+                            }}
                           >
                             Show More
                           </button>
@@ -402,15 +423,21 @@ const Expenses = () => {
           <span>No data submitted yet</span>
         )}
       </div>
-      {isModalOpen && selectedMonth && groupedData[selectedMonth] && (
+      {showMonthModal && (
   <Modal
-    isOpen={isModalOpen}
-    onClose={() => setIsModalOpen(false)}
-    data={groupedData[selectedMonth].data}
+    isOpen={showMonthModal}
+    onClose={() => setShowMonthModal(false)}
+    data={selectedModalData}
   />
 )}
 
-
+{showDateModal && (
+  <Modal
+    isOpen={showDateModal}
+    onClose={() => setShowDateModal(false)}
+    data={selectedModalData}
+  />
+)}
 
     </>
   );
