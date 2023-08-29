@@ -22,7 +22,9 @@ const Income = () => {
   const [editIndex, setEditIndex] = useState(null);
   const totalIncome = calculateTotal(submittedData);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [showMonthModal, setShowMonthModal] = useState(false);
+  const [showDateModal, setShowDateModal] = useState(false);
+  const [selectedModalData, setSelectedModalData] = useState([]); // Data for the active modal
   const [showMore, setShowMore] = useState(false);
 
   const [selectedMonth, setSelectedMonth] = useState(
@@ -95,8 +97,6 @@ const Income = () => {
     setSubmittedData(newData);
   };
 
-
-
   const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
   const groupedData = groupByMonth(submittedData);
 
@@ -107,154 +107,7 @@ const Income = () => {
 
   return (
     <>
-      {/* <div className="flex flex-row">
-        <div className="card my-5 mx-5">
-          <div className="card-overlay"></div>
-          <h3 className="font-bold">Total Income: {totalIncome}</h3>
-          <form onSubmit={handleSubmit}>
-            <label className="flex flex-row items-center text-left px-3 py-2">
-              Income Amount
-              <input
-                type="number"
-                value={income.amount}
-                onChange={(event) =>
-                  setIncome({ ...income, amount: event.target.value })
-                }
-                required
-              />
-            </label>
-            <label className="flex flex-row items-center text-left px-3 py-2">
-              Date
-              <input
-                type="date"
-                value={income.date}
-                onChange={(event) =>
-                  setIncome({ ...income, date: event.target.value })
-                }
-                required
-              />
-            </label>
-            <label className="flex flex-row items-center text-left px-3 py-2">
-              Category
-              <select
-                value={income.category}
-                onChange={(event) =>
-                  setIncome({ ...income, category: event.target.value })
-                }
-              >
-                <option value="">Select</option>
-                <option value="Salary">Salary</option>
-                <option value="Refund">Refund</option>
-                <option value="Others">Others</option>
-              </select>
-            </label>
-            <button className="bg-blue-300 mt-4" type="submit">
-              {editIndex !== null ? "Save Changes" : "Submit"}
-            </button>
-          </form>
-        </div>
-
-        <div className="my-5 mx-5">
-          {submittedData.length > 0 ? (
-            <>
-              <div className="flex">
-                <div className="flex flex-row ">
-                  {todaysIncome && todaysIncome.total !== 0 ? (
-                    <div className="card my-3 text-center">
-                      <div className="card-overlay"></div>
-                      <h3 className="text-md text-center font-bold">
-                        {DateTime.local().toFormat("dd LLL yyyy")}'s Incomes
-                      </h3>
-                      <p>Total: ${todaysIncome.total}</p>
-                      <table>
-                        <tbody>
-                          {todaysIncome.data &&
-                            todaysIncome.data.map((income, index) => (
-                              <tr key={index}>
-                                <td>{income.category}</td>
-                                <td>${income.amount}</td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </table>
-                      <Pie
-                        data={{
-                          labels: todaysIncome.data.map(
-                            (income) => income.category
-                          ),
-                          datasets: [
-                            {
-                              data: Object.values(
-                                todaysIncome.data.reduce((acc, income) => {
-                                  if (!acc[income.category]) {
-                                    acc[income.category] = 0;
-                                  }
-                                  acc[income.category] += parseInt(
-                                    income.amount
-                                  );
-                                  return acc;
-                                }, {})
-                              ),
-                            },
-                          ],
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <div>
-                      <h3>Today's Income</h3>
-                      <p>No data for today</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-              {Object.entries(groupedData).map(([month, data]) => (
-                <div className="card" key={month}>
-                  <div className="card-overlay"></div>
-                  <h2
-                    onClick={() =>
-                      handleMonthClick(month, selectedMonth, setSelectedMonth)
-                    }
-                    className="font-bold"
-                  >
-                    {month}'s total: {data.total}
-                  </h2>
-
-                  {selectedMonth === month && (
-                    <table>
-                      <tbody>
-                        {data.data.map((item, index) => (
-                          <tr key={index}>
-                            <td>{item.amount}</td>
-                            <td>{item.category}</td>
-                            <td>
-                              {DateTime.fromISO(item.date).toFormat(
-                                "dd LLL yy"
-                              )}
-                            </td>
-                            <td>
-                              <button onClick={() => handleEdit(index)}>
-                                Edit
-                              </button>
-                              <button onClick={() => handleDelete(index)}>
-                                Delete
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                </div>
-              ))}
-            </>
-          ) : (
-            <span>No submitted data</span>
-          )}
-        </div>
-      </div> */}
       <div className="grid grid-cols-3 grid-rows-1 gap-12 m-6">
-       
         <form onSubmit={handleSubmit} className="float-left">
           <div className="relative py-3 px-2 ">
             {/* <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div>  */}
@@ -415,6 +268,21 @@ const Income = () => {
                           ))}
                       </tbody>
                     </table>
+                    <div className="mt-4 flex flex-row justify-center">
+                      <button
+                        className="bg-dark-blue text-light-gray rounded-md text-sm"
+                        onClick={() => {
+                          setSelectedModalData(
+                            submittedData.filter(
+                              (item) => item.date === selectedDate
+                            )
+                          );
+                          setShowDateModal(true);
+                        }}
+                      >
+                        Show More
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <p className="h-60 flex justify-center items-center">
@@ -517,7 +385,14 @@ const Income = () => {
                         <div className="mt-4 flex flex-row justify-center">
                           <button
                             className="bg-dark-blue text-light-gray rounded-md text-sm"
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={() => {
+                              setSelectedModalData(
+                                Object.values(groupedData).flatMap(
+                                  (data) => data.data
+                                )
+                              );
+                              setShowMonthModal(true);
+                            }}
                           >
                             Show More
                           </button>
@@ -542,15 +417,22 @@ const Income = () => {
           <span>No data submitted yet</span>
         )}
       </div>
-      {isModalOpen && selectedMonth && groupedData[selectedMonth] && (
-  <Modal
-    isOpen={isModalOpen}
-    onClose={() => setIsModalOpen(false)}
-    data={groupedData[selectedMonth].data}
-  />
-)}
+      {showMonthModal && (
+        <Modal
+          isOpen={showMonthModal}
+          onClose={() => setShowMonthModal(false)}
+          data={selectedModalData}
+        />
+      )}
 
- </>   
+      {showDateModal && (
+        <Modal
+          isOpen={showDateModal}
+          onClose={() => setShowDateModal(false)}
+          data={selectedModalData}
+        />
+      )}
+    </>
   );
 };
 
