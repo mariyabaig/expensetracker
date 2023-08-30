@@ -56,7 +56,7 @@ const Register = ({setIsLoggedin}) => {
         if (json.success) {
           // Save the auth token and redirect
           localStorage.setItem("authtoken", json.authtoken);
-          navigate("/dashboard");
+          navigate("/");
           setIsLoggedin(true)
         }
         

@@ -46,7 +46,7 @@ const Login = ({ setIsLoggedin }) => {
         // Save the auth token and redirect
         localStorage.setItem("authtoken", json.authtoken);
         setIsLoggedin(true);
-        navigate("/dashboard");
+        navigate("/");
         //   alert.show("Successfully logged in.")
       } else {
         //   alert.show("Invalid credentials, try again");
