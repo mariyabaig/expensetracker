@@ -11,15 +11,15 @@ const Navbar = ({setIsLoggedin,handleLogout}) => {
 
   return (
     <div>
-     <div className="h-20 flex items-center bg-green">
+     <div className="h-18 flex items-center bg-green">
       <ul>
         <li>
           ManageMoney
         </li>
       </ul>
      </div>
-      <ul className="flex flex-row h-16  items-center bg-dark-blue text-light-gray text-md ">
-        <li>
+      <ul className="flex flex-row h-16 justify-evenly items-center bg-dark-blue text-light-gray text-md ">
+        <li >
           <Link to="/">
             {/* <img src={dashboardIcon} alt="Dashboard Icon" /> */}
             Dashboard
