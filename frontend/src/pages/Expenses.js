@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import { DateTime } from "luxon";
 import {
   groupByMonth,
-  calculateTotal,
-  todaysData,
-  handleMonthClick,
-  groupByCategory,
-  calculateTotalMonth,
 } from "../util";
 import "chart.js/auto";
 import Modal from "../components/Modal";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Expenses = () => {
   const [expense, setExpense] = useState({
@@ -17,7 +14,7 @@ const Expenses = () => {
     date: "",
     category: "",
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [showMore, setShowMore] = useState(false);
@@ -48,16 +45,10 @@ const Expenses = () => {
         const data = await response.json();
         setSubmittedData(data);
         console.log("Submitted Data Dates:");
-        submittedData.forEach((item) => {
-          if (item && item.date) {
-            console.log(item.date);
-          } else {
-            console.log("Invalid data object:", item);
-          }
-        });
+        
       } catch (err) {
         console.error(err);
-        // Handle error
+        toast.error("Error fetching data. Please try again in some minutes.")
       }
     };
     fetchExpenses();
@@ -86,10 +77,11 @@ const Expenses = () => {
         date: "",
         category: "",
       });
+      toast.success("Expense added.")
     } catch (err) {
       console.error(err);
       console.log(expense);
-      // Handle error
+      toast.error("Something went wrong. Please try again in some minutes.")
     }
   };
 
@@ -104,13 +96,13 @@ const Expenses = () => {
     setSubmittedData(newData);
   };
 
-  const totalExpenses = calculateTotal(submittedData);
+  // const totalExpenses = calculateTotal(submittedData);
 
   const groupedData = groupByMonth(submittedData);
 
   // const todaysExpense = todaysData(submittedData)[DateTime.local().toISODate()];
 
-  const groupExpensesByCategory = groupByCategory(submittedData, "expense");
+  // const groupExpensesByCategory = groupByCategory(submittedData, "expense");
 
   return (
     <>
@@ -201,7 +193,7 @@ const Expenses = () => {
           <>
             <div className="relative py-3 px-2 ">
               <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
-                <label className="text-xl font-semibold">
+                <label className="text-md font-semibold">
                   <input
                     type="date"
                     value={selectedDate}
@@ -209,17 +201,9 @@ const Expenses = () => {
                     onClick={() => console.log(selectedDate)}
                     required
                   />
-                  {"     "}'s expense
+                 
                 </label>
-                {/* {selectedDate === DateTime.now().toISODate() ? (
-                    <h1>Today's Expenses</h1>
-                  ) : (
-                    <h1>
-                      {" "}
-                      {DateTime.fromISO(selectedDate).toFormat("dd LLL yy")}
-                      's Expenses
-                    </h1>
-                  )} */}
+
                 {submittedData.filter((item) => item.date === selectedDate)
                   .length > 0 ? (
                   <div className="w-full h-[300px] my-5 overflow-auto">

@@ -5,11 +5,10 @@ import {
   groupByMonth,
   calculateTotal,
   todaysData,
-  handleMonthClick,
-  groupByCategory,
 } from "../util";
 import "chart.js/auto";
-import { Pie } from "react-chartjs-2";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Income = () => {
   const [income, setIncome] = useState({
@@ -21,7 +20,6 @@ const Income = () => {
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const totalIncome = calculateTotal(submittedData);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showMonthModal, setShowMonthModal] = useState(false);
   const [showDateModal, setShowDateModal] = useState(false);
   const [selectedModalData, setSelectedModalData] = useState([]); // Data for the active modal
@@ -49,6 +47,7 @@ const Income = () => {
         setSubmittedData(data);
       } catch (err) {
         console.error(err);
+        toast.error("Error fetching data. Try again later.")
       }
     };
     fetchIncome();
@@ -80,9 +79,10 @@ const Income = () => {
         date: "",
         category: "",
       });
+      toast.success("Income added.")
     } catch (err) {
       console.error(err);
-      // Handle error
+      toast.error("Something went wrong. Please try again in some minutes.")
     }
   };
 
@@ -103,7 +103,6 @@ const Income = () => {
   const todaysIncome = todaysData(submittedData)[DateTime.local().toISODate()];
   console.log(todaysIncome);
 
-  const groupIncomeByCategory = groupByCategory(submittedData);
 
   return (
     <>
@@ -373,14 +372,7 @@ const Income = () => {
                           </button>
                         </div>
 
-                        {/* Modal */}
-                        {/* <Modal
-                          isOpen={isModalOpen}
-                          onClose={() => setIsModalOpen(false)}
-                          data={Object.values(groupedData).flatMap(
-                            (data) => data.data
-                          )}
-                        /> */}
+                       
                       </table>
                     ) : null
                   )}

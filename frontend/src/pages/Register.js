@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Register = ({setIsLoggedin}) => {
   const navigate = useNavigate();
 
@@ -58,12 +61,15 @@ const Register = ({setIsLoggedin}) => {
           localStorage.setItem("authtoken", json.authtoken);
           navigate("/");
           setIsLoggedin(true)
+          toast.success("Successfully registered")
         }
         
           if (json.error === "Sorry a user with this email already exists") {
+            toast.error("User already exists. Try a different email.")
           }
         
       } else {
+        toast.error("Something went wrong. Try again later.")
       }
     },
   });
