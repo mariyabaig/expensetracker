@@ -258,8 +258,19 @@ const Income = () => {
                           ))}
                       </tbody>
                     </table>
-                    
+                    <div className="mt-4 flex flex-row justify-center">
+                      <button
+  className="bg-dark-blue text-light-gray rounded-md text-sm p-2"
+  onClick={() => {
+    setSelectedModalData(submittedData.filter(item => item.date === selectedDate));
+    setShowDateModal(true);
+  }}
+>
+  Show More
+</button>
+                      </div>
                   </div>
+                  
                 ) : (
                   <p className="h-60 flex justify-center items-center">
                     No details found for selected date.
