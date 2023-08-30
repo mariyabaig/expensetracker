@@ -7,14 +7,14 @@ import "chart.js/auto";
 import Modal from "../components/Modal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useExpenseContext } from "../ExpenseContext";
 const Expenses = () => {
   const [expense, setExpense] = useState({
     amount: "",
     date: "",
     category: "",
   });
-
+  const { expensesData, setExpensesData } = useExpenseContext();
   const [submittedData, setSubmittedData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [showMore, setShowMore] = useState(false);
@@ -44,8 +44,11 @@ const Expenses = () => {
         }
         const data = await response.json();
         setSubmittedData(data);
+        setExpensesData(data)
         console.log("Submitted Data Dates:");
-        
+        console.log(submittedData)
+        console.log("Expensesssss Data:", expensesData);
+
       } catch (err) {
         console.error(err);
         toast.error("Error fetching data. Please try again in some minutes.")
