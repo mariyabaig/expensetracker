@@ -3,21 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({ setIsLoggedin }) => {
   const navigate = useNavigate();
   const goToRegister = () => {
     navigate("/register");
   };
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
-
-  const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -26,10 +24,6 @@ const Login = ({ setIsLoggedin }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      // Your existing handleSubmit logic goes here
-      // Instead of using `credentials.email` and `credentials.password`,
-      // you'll use `values.email` and `values.password` from formik
-      
       const response = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: {
@@ -47,37 +41,14 @@ const Login = ({ setIsLoggedin }) => {
         localStorage.setItem("authtoken", json.authtoken);
         setIsLoggedin(true);
         navigate("/");
-        //   alert.show("Successfully logged in.")
+        toast.success("Successfully logged in.");
+        
       } else {
-        //   alert.show("Invalid credentials, try again");
+        toast.error("Invalid email or password.");
       }
     },
   });
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const response = await fetch("http://localhost:8000/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       email: credentials.email,
-  //       password: credentials.password,
-  //     }),
-  //   });
-  //   const json = await response.json();
-  //   console.log(json);
-  //   if (json.success) {
-  //     // Save the auth token and redirect
-  //     localStorage.setItem("authtoken", json.authtoken);
-  //     setIsLoggedin(true)
-  //     navigate("/dashboard");
-  //   //   alert.show("Successfully logged in.")
-  //   } else {
-  //   //   alert.show("Invalid credentials, try again");
-  //   }
-  // };
   const handleGoogleLogin = async (response) => {
     const tokenId = response.tokenId;
     const res = await fetch("http://localhost:8000/login", {
@@ -97,7 +68,7 @@ const Login = ({ setIsLoggedin }) => {
       // Save the auth token and redirect
       localStorage.setItem("authtoken", json.authtoken);
       setIsLoggedin(true);
-      navigate("/dashboard");
+      navigate("/");
     } else {
       // Handle error
     }

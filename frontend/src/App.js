@@ -7,6 +7,7 @@ import './App.css';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { useState,useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 function App() { 
   const [isLoggedin, setIsLoggedin] = useState(false);
@@ -49,7 +50,7 @@ function App() {
   return (
   
     <BrowserRouter>
-     
+     <ToastContainer/>
     {isLoggedin && <Navbar isLoggedin={isLoggedin} handleLogout={handleLogout} />}
      
      
