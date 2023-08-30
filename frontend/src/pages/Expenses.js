@@ -222,7 +222,7 @@ const Expenses = () => {
                   )} */}
                 {submittedData.filter((item) => item.date === selectedDate)
                   .length > 0 ? (
-                  <div className="w-full">
+                  <div className="w-full overflow-auto">
                     <table className="table-auto w-full" id="table-to-xls">
                       <thead className="text-xs font-semibold uppercase text-dark-blue ">
                         <tr>
@@ -321,7 +321,7 @@ const Expenses = () => {
                     <option value="December">December</option>
                   </select>
                 </label>
-                <div className="my-5 w-full">
+                <div className="my-5 w-full overflow-auto">
                   {Object.entries(groupedData).map(([month, data]) =>
                     selectedMonth === month ? (
                       <table
@@ -346,7 +346,7 @@ const Expenses = () => {
                           </tr>
                         </thead>
                         {/* Table body */}
-                        <tbody className="text-sm">
+                        <tbody className="text-sm ">
                           {data.data
 
                             .slice(0, showMore ? data.data.length : 4)

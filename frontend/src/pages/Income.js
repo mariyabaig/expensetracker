@@ -215,7 +215,7 @@ const Income = () => {
                   )} */}
                 {submittedData.filter((item) => item.date === selectedDate)
                   .length > 0 ? (
-                  <div className="w-full">
+                  <div className="w-full overflow-auto">
                     <table className="table-auto w-full" id="table-to-xls">
                       <thead className="text-xs font-semibold uppercase text-dark-blue ">
                         <tr>
@@ -234,7 +234,7 @@ const Income = () => {
                         </tr>
                       </thead>
                       {/* Table body */}
-                      <tbody className="text-sm">
+                      <tbody className="text-sm ">
                         {/* Display details for selected date */}
                         {submittedData
 
@@ -271,7 +271,7 @@ const Income = () => {
                           ))}
                       </tbody>
                     </table>
-                    <div className="mt-4 flex flex-row justify-center">
+                    <div className="mt-4 flex flex-row justify-center ">
                       <button
   className="bg-dark-blue text-light-gray rounded-md text-sm"
   onClick={() => {
@@ -290,8 +290,8 @@ const Income = () => {
                 )}
               </div>
             </div>
-            <div className="relative py-3 px-2 ">
-              <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
+            <div className="relative py-3 px-2  ">
+              <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12 overflow-auto">
                 <label className="items-center">
                   <select
                     value={selectedMonth}
