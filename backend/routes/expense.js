@@ -79,7 +79,6 @@ router.put("/editexpense/:id", fetchUser, async (req, res) => {
 
 module.exports = router;
 
-// const express = require("express");
 // const router = express.Router();
 // const expense = require("../models/expenseSchema");
 
