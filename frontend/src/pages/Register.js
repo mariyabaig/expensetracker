@@ -68,43 +68,13 @@ const Register = ({setIsLoggedin}) => {
     },
   });
   
-  // const register = async (e) => {
-  //   e.preventDefault();
-  //   const { name, email, password, cpassword } = credentials;
-  //   if (password === cpassword) {
-  //     const response = await fetch(
-  //       "http://localhost:8000/register",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ name, email, password }),
-  //       }
-  //     );
-  //     const json = await response.json();
-  //     //console.log(json);
-  //     if (json.success) {
-  //       // Save the auth token and redirect
-  //       localStorage.setItem("authtoken", json.authtoken);
-  //       navigate("/dashboard");
-  //       setIsLoggedin(true)
-  //     }
-      
-  //       if (json.error === "Sorry a user with this email already exists") {
-  //       }
-      
-  //   } else {
-  //   }
-  // };
-
   return (
     <>
       <div
         className="flex justify-center items-center p-16"
        
       ></div>
-      <div className="bg-gray-100 rounded-b-lg">
+      <div className="rounded-b-lg">
         <div className="card p-8 lg:w-1/2 mx-auto">
           <div className="card-overlay"></div>
 
