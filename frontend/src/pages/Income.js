@@ -97,8 +97,6 @@ const Income = () => {
     setSubmittedData(newData);
   };
 
-
-
   const [selectedDate, setSelectedDate] = useState(DateTime.now().toISODate());
   const groupedData = groupByMonth(submittedData);
 
@@ -110,7 +108,6 @@ const Income = () => {
   return (
     <>
       <div className="grid grid-cols-3 grid-rows-1 gap-12 m-6">
-       
         <form onSubmit={handleSubmit} className="float-left">
           <div className="relative py-3 px-2 ">
             {/* <div className="absolute inset-0 bg-gradient-to-r from-green to-green shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-xl"></div>  */}
@@ -194,7 +191,7 @@ const Income = () => {
           <>
             <div className="relative py-3 px-2 ">
               <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
-                <label className="text-xl font-semibold">
+                <label className="text-md font-semibold">
                   <input
                     type="date"
                     value={selectedDate}
@@ -202,20 +199,11 @@ const Income = () => {
                     onClick={() => console.log(selectedDate)}
                     required
                   />
-                  {"     "}'s expense
                 </label>
-                {/* {selectedDate === DateTime.now().toISODate() ? (
-                    <h1>Today's incomes</h1>
-                  ) : (
-                    <h1>
-                      {" "}
-                      {DateTime.fromISO(selectedDate).toFormat("dd LLL yy")}
-                      's incomes
-                    </h1>
-                  )} */}
+
                 {submittedData.filter((item) => item.date === selectedDate)
                   .length > 0 ? (
-                  <div className="w-full overflow-auto">
+                  <div className="w-full h-[300px] overflow-auto my-5">
                     <table className="table-auto w-full" id="table-to-xls">
                       <thead className="text-xs font-semibold uppercase text-dark-blue ">
                         <tr>
@@ -233,7 +221,7 @@ const Income = () => {
                           </th>
                         </tr>
                       </thead>
-                      {/* Table body */}
+
                       <tbody className="text-sm ">
                         {/* Display details for selected date */}
                         {submittedData
@@ -271,17 +259,7 @@ const Income = () => {
                           ))}
                       </tbody>
                     </table>
-                    <div className="mt-4 flex flex-row justify-center ">
-                      <button
-  className="bg-dark-blue text-light-gray rounded-md text-sm"
-  onClick={() => {
-    setSelectedModalData(submittedData.filter(item => item.date === selectedDate));
-    setShowDateModal(true);
-  }}
->
-  Show More
-</button>
-                      </div>
+                    
                   </div>
                 ) : (
                   <p className="h-60 flex justify-center items-center">
@@ -291,7 +269,7 @@ const Income = () => {
               </div>
             </div>
             <div className="relative py-3 px-2  ">
-              <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12 overflow-auto">
+              <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-xl sm:p-12">
                 <label className="items-center">
                   <select
                     value={selectedMonth}
@@ -314,7 +292,7 @@ const Income = () => {
                     <option value="December">December</option>
                   </select>
                 </label>
-                <div className="my-5 w-full">
+                <div className="my-5 w-full  h-[300px] overflow-auto">
                   {Object.entries(groupedData).map(([month, data]) =>
                     selectedMonth === month ? (
                       <table
@@ -382,15 +360,17 @@ const Income = () => {
                             ))}
                         </tbody>
                         <div className="mt-4 flex flex-row justify-center">
-                        <button
-    className="bg-dark-blue text-light-gray rounded-md text-sm"
-    onClick={() => {
-      setSelectedModalData(groupedData[selectedMonth].data);
-      setShowMonthModal(true);
-    }}
-  >
-    Show More
-  </button>
+                          <button
+                            className="bg-dark-blue text-light-gray rounded-md text-sm"
+                            onClick={() => {
+                              setSelectedModalData(
+                                groupedData[selectedMonth].data
+                              );
+                              setShowMonthModal(true);
+                            }}
+                          >
+                            Show More
+                          </button>
                         </div>
 
                         {/* Modal */}
@@ -413,23 +393,21 @@ const Income = () => {
         )}
       </div>
       {showMonthModal && (
-  <Modal
-    isOpen={showMonthModal}
-    onClose={() => setShowMonthModal(false)}
-    data={selectedModalData}
-  />
-)}
+        <Modal
+          isOpen={showMonthModal}
+          onClose={() => setShowMonthModal(false)}
+          data={selectedModalData}
+        />
+      )}
 
-{showDateModal && (
-  <Modal
-    isOpen={showDateModal}
-    onClose={() => setShowDateModal(false)}
-    data={selectedModalData}
-  />
-)}
-
-
- </>   
+      {showDateModal && (
+        <Modal
+          isOpen={showDateModal}
+          onClose={() => setShowDateModal(false)}
+          data={selectedModalData}
+        />
+      )}
+    </>
   );
 };
 
