@@ -16,36 +16,35 @@ function App() {
     localStorage.clear();
     setIsLoggedin(false);}
     // Fetch user details when the component mounts
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/getuser", {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-            authtoken: localStorage.getItem("authtoken"),
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+    useEffect(() => {
+      const fetchUserDetails = async () => {
+        try {
+          const response = await fetch("http://localhost:8000/getuser", {
+            method: "POST",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+              authtoken: localStorage.getItem("authtoken"),
+            },
+          });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          setUserName(data.name);
+          console.log(data.name); // Log the updated user name
+        } catch (err) {
+          console.error(err);
+          // Handle error
         }
-        const data = await response.json();
-        setUserName(data.name);
-        console.log(userName)
-      } catch (err) {
-        console.error(err);
-        // Handle error
+      };
+    
+      // Fetch user details only if the user is logged in
+      if (isLoggedin) {
+        fetchUserDetails();
       }
-    };
-
-    // Fetch user details only if the user is logged in
-    if (isLoggedin) {
-      fetchUserDetails();
-      
-    }
-  }, [isLoggedin]);
-
+    }, [isLoggedin]);
+    
   
   return (
   
@@ -58,7 +57,7 @@ function App() {
         
         <Route
           exact
-          path="/dashboard"
+          path="/"
           element={isLoggedin ? <Dashboard setIsLoggedin={setIsLoggedin}/> : <Login setIsLoggedin={setIsLoggedin}/> }
         />
         <Route
