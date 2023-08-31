@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { useState,useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import Home from "./pages/Home";
 
 function App() { 
   const [isLoggedin, setIsLoggedin] = useState(false);
@@ -53,12 +54,12 @@ function App() {
      <ToastContainer/>
     {isLoggedin && <Navbar isLoggedin={isLoggedin} handleLogout={handleLogout} />}
      
-     
+   
       <Routes>
-        
+        <Route exact path="/"  element={<Home/>}/>
         <Route
           exact
-          path="/"
+          path="/dashboard"
           element={isLoggedin ? <Dashboard setIsLoggedin={setIsLoggedin}/> : <Login setIsLoggedin={setIsLoggedin}/> }
         />
         <Route
@@ -71,7 +72,7 @@ function App() {
           path="/expenses"
           element={isLoggedin ? <Expenses setIsLoggedin={setIsLoggedin}/> : <Login setIsLoggedin={setIsLoggedin}/> }
         />
-        <Route exact path="/" element={<Login setIsLoggedin={setIsLoggedin}/>} ></Route> 
+        <Route exact path="/login" element={<Login setIsLoggedin={setIsLoggedin}/>} ></Route> 
         <Route path="/register" element={<Register/>} />
       </Routes>
     </BrowserRouter>

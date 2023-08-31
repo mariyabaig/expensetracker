@@ -9,7 +9,7 @@ const Register = ({setIsLoggedin}) => {
   const navigate = useNavigate();
 
   const goToLogin = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
  
@@ -59,7 +59,7 @@ const Register = ({setIsLoggedin}) => {
         if (json.success) {
           // Save the auth token and redirect
           localStorage.setItem("authtoken", json.authtoken);
-          navigate("/");
+          navigate("/dashboard");
           setIsLoggedin(true)
           toast.success("Successfully registered")
         }
@@ -81,8 +81,8 @@ const Register = ({setIsLoggedin}) => {
        
       ></div>
       <div className="rounded-b-lg">
-        <div className="card p-8 lg:w-1/2 mx-auto">
-          <div className="card-overlay"></div>
+        <div className="cards p-8 lg:w-1/2 mx-auto">
+          <div className="cards-overlay"></div>
 
           <div className=" rounded-b-lg py-12 px-4 lg:px-24">
             <p className="text-center text-xl text-gray-500 font-light">

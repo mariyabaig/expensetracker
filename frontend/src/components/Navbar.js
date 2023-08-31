@@ -20,7 +20,7 @@ const Navbar = ({setIsLoggedin,handleLogout}) => {
      </div>
       <ul className="flex flex-row h-16 justify-evenly items-center bg-dark-blue text-light-gray text-md ">
         <li >
-          <Link to="/">
+          <Link to="/dashboard">
          <img src={dashboardIcon} alt="Dashboard Icon" /> 
             Dashboard
           </Link>

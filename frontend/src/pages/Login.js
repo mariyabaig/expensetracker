@@ -40,7 +40,7 @@ const Login = ({ setIsLoggedin }) => {
         // Save the auth token and redirect
         localStorage.setItem("authtoken", json.authtoken);
         setIsLoggedin(true);
-        navigate("/");
+        navigate("/dashboard");
         toast.success("Successfully logged in.");
         
       } else {
@@ -68,7 +68,7 @@ const Login = ({ setIsLoggedin }) => {
       // Save the auth token and redirect
       localStorage.setItem("authtoken", json.authtoken);
       setIsLoggedin(true);
-      navigate("/");
+      navigate("/dashboard");
     } else {
       // Handle error
     }
@@ -81,8 +81,8 @@ const Login = ({ setIsLoggedin }) => {
     <>
       <div className="flex justify-center items-center p-16"></div>
 
-      <div className=" card p-8 lg:w-1/2 mx-auto">
-        <div className="card-overlay"></div>
+      <div className=" cards p-8 lg:w-1/2 mx-auto">
+        <div className="cards-overlay"></div>
         <div>
           <div className=" rounded-b-lg py-12 px-4 lg:px-24">
             <p className="text-center text-xl text-gray-500 font-light">
