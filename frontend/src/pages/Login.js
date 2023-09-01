@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../components/Header";
 
 const Login = ({ setIsLoggedin }) => {
   const navigate = useNavigate();
@@ -79,11 +80,11 @@ const Login = ({ setIsLoggedin }) => {
 
   return (
     <>
-      <div className="flex justify-center items-center p-16"></div>
-
-      <div className=" cards p-8 lg:w-1/2 mx-auto">
-        <div className="cards-overlay"></div>
-        <div>
+      <div className="flex justify-center items-center p-20 bg-green">
+     <Header/>
+      <div className="cards p-8 lg:w-1/2 mx-auto bg-white rounded-md shadow-lg">
+       
+      
           <div className=" rounded-b-lg py-12 px-4 lg:px-24">
             <p className="text-center text-xl text-gray-500 font-light">
               Sign in with credentials
@@ -94,7 +95,7 @@ const Login = ({ setIsLoggedin }) => {
                   className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                   id="email"
                   type="email"
-                  placeholder="Email"
+                 placeholder="Email"
                   name="email"
                   value={formik.values.email}
                   onChange={formik.handleChange}
@@ -177,11 +178,12 @@ const Login = ({ setIsLoggedin }) => {
                 </button>
               </div>
             </form>
-          </div>
+         
         </div>
       </div>
       <div />
       <div />
+      </div>
     </>
   );
 };

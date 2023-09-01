@@ -2,17 +2,16 @@ import React from "react";
 import chart from "../assets/data-management.png";
 import money from "../assets/money.png";
 import Credit from "../components/Credit";
+import Header from "../components/Header";
 
 const Home = () => {
   return (
     <div className="bg-gray-200">
-      <nav className="h-20 flex items-center p-12 text-3xl">
-        ManageMoney
-      </nav>
+<Header/>
       <div className="grid grid-cols-2 h-screen">
         <div className="h-full flex flex-col p-32">
           <span className="my-10 p-2 bg-slate-100 w-3/4 rounded-md text-sm text-lack font-bold">
-            ManageMoney is now available for free!
+            BudgetBuddy is now available for free!
           </span>
           <span className="text-5xl">
             Efficient Money{" "}
@@ -25,7 +24,7 @@ const Home = () => {
           </span>
           <span className="my-10 text-sm text-gray-600">
             Take full control of your money and achieve financial stability with
-            ManageMoney.
+            BudgetBuddy.
           </span>
 
         </div>
