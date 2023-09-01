@@ -80,7 +80,7 @@ const Login = ({ setIsLoggedin }) => {
 
   return (
     <>
-      <div className="flex justify-center items-center p-20 bg-green">
+      <div className="flex justify-center items-center p-24 bg-green">
      <Header/>
       <div className="cards p-8 lg:w-1/2 mx-auto bg-white rounded-md shadow-lg">
        

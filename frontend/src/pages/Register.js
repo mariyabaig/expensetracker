@@ -4,15 +4,17 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../components/Header";
 
-const Register = ({setIsLoggedin}) => {
+const Register = ({ setIsLoggedin }) => {
   const navigate = useNavigate();
 
   const goToLogin = () => {
     navigate("/dashboard");
   };
 
- 
+
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
@@ -21,7 +23,7 @@ const Register = ({setIsLoggedin}) => {
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
   });
-  
+
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -44,47 +46,40 @@ const Register = ({setIsLoggedin}) => {
     onSubmit: async (values) => {
       const { name, email, password, cpassword } = credentials;
       if (password === cpassword) {
-        const response = await fetch(
-          "http://localhost:8000/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ name, email, password }),
-          }
-        );
+        const response = await fetch("http://localhost:8000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        });
         const json = await response.json();
         //console.log(json);
         if (json.success) {
           // Save the auth token and redirect
           localStorage.setItem("authtoken", json.authtoken);
           navigate("/dashboard");
-          setIsLoggedin(true)
-          toast.success("Successfully registered")
+          setIsLoggedin(true);
+          toast.success("Successfully registered");
         }
-        
-          if (json.error === "Sorry a user with this email already exists") {
-            toast.error("User already exists. Try a different email.")
-          }
-        
+
+        if (json.error === "Sorry a user with this email already exists") {
+          toast.error("User already exists. Try a different email.");
+        }
       } else {
-        toast.error("Something went wrong. Try again later.")
+        toast.error("Something went wrong. Try again later.");
       }
     },
   });
-  
+
   return (
     <>
-      <div
-        className="flex justify-center items-center p-16"
-       
-      ></div>
-      <div className="rounded-b-lg">
+      <div className="flex justify-center items-center p-16">
+      <Header />
+     
+        
         <div className="cards p-8 lg:w-1/2 mx-auto">
-          <div className="cards-overlay"></div>
-
-          <div className=" rounded-b-lg py-12 px-4 lg:px-24">
+          <div className="rounded-b-lg py-12 px-4 lg:px-24">
             <p className="text-center text-xl text-gray-500 font-light">
               Sign up with credentials
             </p>
@@ -102,8 +97,8 @@ const Register = ({setIsLoggedin}) => {
                   required
                 />
                 {formik.touched.name && formik.errors.name && (
-  <div className="text-red-500">{formik.errors.name}</div>
-)}
+                  <div className="text-red-500">{formik.errors.name}</div>
+                )}
                 <div className="absolute left-0 inset-y-0 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -129,8 +124,8 @@ const Register = ({setIsLoggedin}) => {
                   required
                 />
                 {formik.touched.email && formik.errors.email && (
-  <div className="text-red-500">{formik.errors.email}</div>
-)}
+                  <div className="text-red-500">{formik.errors.email}</div>
+                )}
                 <div className="absolute left-0 inset-y-0 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -156,8 +151,8 @@ const Register = ({setIsLoggedin}) => {
                   required
                 />
                 {formik.touched.password && formik.errors.password && (
-  <div className="text-red-500">{formik.errors.password}</div>
-)}
+                  <div className="text-red-500">{formik.errors.password}</div>
+                )}
                 <div className="absolute left-0 inset-y-0 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -183,8 +178,8 @@ const Register = ({setIsLoggedin}) => {
                   required
                 />
                 {formik.touched.cpassword && formik.errors.cpassword && (
-  <div className="text-red-500">{formik.errors.cpassword}</div>
-)}
+                  <div className="text-red-500">{formik.errors.cpassword}</div>
+                )}
                 <div className="absolute left-0 inset-y-0 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -198,16 +193,17 @@ const Register = ({setIsLoggedin}) => {
               </div>
 
               <div className="flex items-center justify-center mt-8">
-              <button
-  className={`text-white py-2 px-4 uppercase rounded ${
-    formik.isSubmitting || !formik.isValid ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
-  }`}
-  type="submit"
-  disabled={formik.isSubmitting || !formik.isValid}
->
-  Create Account
-</button>
-
+                <button
+                  className={`text-white py-2 px-4 uppercase rounded ${
+                    formik.isSubmitting || !formik.isValid
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                  }`}
+                  type="submit"
+                  disabled={formik.isSubmitting || !formik.isValid}
+                >
+                  Create Account
+                </button>
               </div>
               <span className="text-xl flex justify-center mt-2 text-gray-500">
                 Already have an account?
@@ -224,6 +220,7 @@ const Register = ({setIsLoggedin}) => {
             </form>
           </div>
         </div>
+     
       </div>
     </>
   );

@@ -3,8 +3,20 @@ import chart from "../assets/data-management.png";
 import money from "../assets/money.png";
 import Credit from "../components/Credit";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+    const navigate = useNavigate();
+    const goToRegister = () => {
+        navigate("/register");
+      };
+
+      const goToLogin = () => {
+        navigate("/login");
+      };
+      const goToHome = () => {
+        navigate("/");
+      };
   return (
     <div className="bg-gray-200">
 <Header/>
@@ -31,10 +43,10 @@ const Home = () => {
         <div className="bg-green rounded-md flex flex-col justify-center items-center h-4/5" >
           <Credit />
           <div className="flex gap-4 m-6">
-            <button className="bg-indigo-900 text-white px-4 py-2 rounded-md">
+            <button className="bg-indigo-900 text-white px-4 py-2 rounded-md" onClick={goToLogin}>
               Log In
             </button>
-            <button className="bg-indigo-900 text-white px-4 py-2 rounded-md">
+            <button className="bg-indigo-900 text-white px-4 py-2 rounded-md" onClick={goToRegister}>
               Sign Up
             </button>
           </div>
