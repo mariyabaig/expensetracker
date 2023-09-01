@@ -1,5 +1,7 @@
 import React from 'react';
 import "./Credit.css"
+import visa from "../assets/visa.png"
+import chip from "../assets/chip.png"
 const Credit = () => {
   return (
     <>
@@ -7,8 +9,8 @@ const Credit = () => {
 
 <div className="card">
   <div className="card__front card__part">
-    <img className="card__front-square card__square" src="https://image.ibb.co/cZeFjx/little_square.png"/>
-    <img className="card__front-logo card__logo" src="https://www.fireeye.com/partners/strategic-technology-partners/visa-fireeye-cyber-watch-program/_jcr_content/content-par/grid_20_80_full/grid-20-left/image.img.png/1505254557388.png"/>
+    <img className="card__front-square card__square" src={chip} alt='chip'/>
+    <img className="card__front-logo card__logo" src={visa} alt="visa"/>
     <p className="card_numer">**** **** **** 6258</p>
     <div className="card__space-75">
       <span className="card__label">Card holder</span>
@@ -26,8 +28,8 @@ const Credit = () => {
       <div className="card__secret">
         <p className="card__secret--last">420</p>
       </div>
-      <img className="card__back-square card__square" src="https://image.ibb.co/cZeFjx/little_square.png"/>
-      <img className="card__back-logo card__logo" src="https://www.fireeye.com/partners/strategic-technology-partners/visa-fireeye-cyber-watch-program/_jcr_content/content-par/grid_20_80_full/grid-20-left/image.img.png/1505254557388.png"/>
+      <img className="card__back-square card__square" src={chip} alt='chip'/>
+      <img className="card__back-logo card__logo"src={visa} alt="visa"/>
       
     </div>
   </div>
