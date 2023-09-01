@@ -380,9 +380,7 @@ const Expenses = () => {
                             className="bg-dark-blue text-light-gray rounded-md text-sm"
                             onClick={() => {
                               setSelectedModalData(
-                                Object.values(groupedData).flatMap(
-                                  (data) => data.data
-                                )
+                                groupedData[selectedMonth].data
                               );
                               setShowMonthModal(true);
                             }}
