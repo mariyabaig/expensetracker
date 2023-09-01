@@ -4,6 +4,7 @@ import dashboardIcon from "../assets/business-report.png";
 import expensesIcon from "../assets/expenses.png";
 import shutdown from "../assets/shutdown.png";
 import incomeIcon from "../assets/income.png";
+import icon from "../assets/manage.png";
 
 const Navbar = ({setIsLoggedin,handleLogout}) => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Navbar = ({setIsLoggedin,handleLogout}) => {
      <div className="h-18 flex items-center bg-green">
       <ul>
         <li>
-          BudgetBuddy
+          BudgetBuddy  <img src={icon} alt="Dashboard Icon" /> 
         </li>
       </ul>
      </div>
