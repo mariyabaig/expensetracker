@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // app.use('/register',require('./routes/router'))
+
 app.get("/",(req,res)=>{
     res.json("server start")
 })
