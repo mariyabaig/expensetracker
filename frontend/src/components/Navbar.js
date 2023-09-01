@@ -14,8 +14,8 @@ const Navbar = ({setIsLoggedin,handleLogout}) => {
     <div>
      <div className="h-18 flex items-center bg-green">
       <ul>
-        <li>
-          BudgetBuddy  <img src={icon} alt="Dashboard Icon" /> 
+        <li className="flex items-center text-5xl p-3">
+          BudgetBuddy  <img src={icon} alt="Dashboard Icon" className="h-20"/> 
         </li>
       </ul>
      </div>
