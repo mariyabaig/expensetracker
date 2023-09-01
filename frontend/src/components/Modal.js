@@ -1,9 +1,12 @@
-import React from "react";
+import React ,{useState} from "react";
 import { DateTime } from "luxon";
 import { Pie } from "react-chartjs-2";
+import { CSVLink, CSVDownload } from "react-csv";
 
 const Modal = ({ isOpen, onClose, data }) => {
   // Calculate data for the Pie chart
+  const [csvData, setCsvData] = useState([]);
+
   const categoryAmounts = data.reduce((acc, expense) => {
     if (!acc[expense.category]) {
       acc[expense.category] = 0;
@@ -21,11 +24,17 @@ const Modal = ({ isOpen, onClose, data }) => {
           "#FF6384",
           "#36A2EB",
           "#FFCE56",
-          // Add more colors if needed
+          
         ],
       },
     ],
   };
+
+  const tableData = data.map((expense, index) => ({
+    Amount: expense.amount,
+    Category: expense.category,
+    Date: DateTime.fromISO(expense.date).toFormat("dd LLL yyyy"),
+  }));
 
   return (
     <div
@@ -67,6 +76,15 @@ const Modal = ({ isOpen, onClose, data }) => {
         </div>
         </div>
         <div>
+        <div className="mt-4">
+          <CSVLink
+            data={tableData}
+            filename={"expense_data.csv"}
+            className="bg-dark-blue text-light-gray rounded-md px-2 py-1"
+          >
+            Export CSV
+          </CSVLink>
+        </div>
           <button
             className="mt-4 bg-dark-blue text-light-gray rounded-md px-2 py-1"
             onClick={onClose}
